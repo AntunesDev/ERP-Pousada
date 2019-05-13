@@ -1,32 +1,25 @@
 <?php
 namespace Models;
 
-use Core;
+use Core, Exception;
 use \PDO;
 
 class Usuario extends Core\Model
 {
-
-private $usuario;
 
   	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function getUsuario($UsuarioE)
+	public function verificarUsuario($UsuarioE)
 	{
 		try
 		{
-			$sql = $this->db->prepare("SELECT * FROM nt_SenhaCad 
-					WHERE senUsuario = :usuario AND senSenha = :senha");
-			$sql->bindParam(":usuario", $UsuarioE->senUsuario);
-			$sql->bindParam(":senha", $UsuarioE->senSenha);
+			$sql = $this->db->prepare("SELECT * FROM usuarios WHERE usr_name = :usr_name;");
+			$sql->bindParam(":usr_name", $UsuarioE->usrName);
 			$sql->execute();
-
-			$this->usuario = $sql->fetch(PDO::FETCH_OBJ);
-
-			return $this->usuario;
+			return $sql->fetch(PDO::FETCH_OBJ);
 		}
 		catch(Exception $exception)
 		{

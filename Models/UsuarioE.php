@@ -3,8 +3,8 @@
 
 	class UsuarioE
 	{
-		public $senUsuario;
-		public $senSenha;
-		public $senNome;
-		public $senValidade;
+		public $usrId;
+		public $usrName;
+		public $usrSenha;
+		public $usrGrupo;
 	}

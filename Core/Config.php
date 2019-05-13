@@ -13,38 +13,38 @@ class Config
      * @var string
      * @options(windows, linux)
      */
-    const DB_OS = 'DB_OS';
+    const DB_OS = 'windows';
 
     /**
      * Database Engine
      * @var string
      * @options(mysql, sqlserver)
      */
-    const DB_ENGINE = 'DB_ENGINE';
+    const DB_ENGINE = 'mysql';
 
     /**
      * Database host
      * @var string
      */
-    const DB_HOST = '192.168.0.DB_HOST';
+    const DB_HOST = 'localhost';
 
     /**
      * Database name
      * @var string
      */
-    const DB_NAME = 'DB_NAME';
+    const DB_NAME = 'erp-pousada';
 
     /**
      * Database user
      * @var string
      */
-    const DB_USER = 'DB_USER';
+    const DB_USER = 'root';
 
     /**
      * Database password
      * @var string
      */
-    const DB_PASSWORD = 'DB_PASSWORD';
+    const DB_PASSWORD = '';
 
     /**
      * Show or hide error messages on screen
