@@ -95,7 +95,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-right">
                 <li class="dropdown-header">
-                    <strong><?php echo $session_username?></strong>
+                    <strong><?php echo ucfirst($session_username)?></strong>
                 </li>
                 <li>
                     <a href="<?php echo BASE_URL?>login/logout">

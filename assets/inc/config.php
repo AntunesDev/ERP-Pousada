@@ -68,4 +68,4 @@ $primary_nav = array(
     )
 );
 
-$session_username = $_SESSION["app_erp_pousada"]["user"]["data"]["nome"] ?? '';
+$session_username = $_SESSION["app_erp_pousada"]["user"]["data"]["usuario"] ?? '';

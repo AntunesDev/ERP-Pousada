@@ -21,6 +21,6 @@ class Controller extends Acl {
   }
 
   public function loadTemplateLogin($viewName, $viewData) {
-		include 'views/Login/login.php';
+		include 'views/template/login.php';
 	}
 }

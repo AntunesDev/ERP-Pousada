@@ -4,3 +4,5 @@
 <script src="<?php echo BASE_URL?>assets/js/vendor/axios.min.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/plugins.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/app.js"></script>
+
+<script src="<?php echo BASE_URL?>assets/js/pages/jquery.loading_screen.js"></script>
