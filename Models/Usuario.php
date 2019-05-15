@@ -90,7 +90,7 @@ class Usuario extends Core\Model
 		}
 		catch (Exception $exception)
 		{
-			throw new Exception($exception, 500);
+			return false;
 		}
 	}
 
@@ -137,7 +137,7 @@ class Usuario extends Core\Model
 		}
 	}
 
-	public function consultarUsuario()
+	public function consultarUsuarios()
 	{
 		try
 		{
