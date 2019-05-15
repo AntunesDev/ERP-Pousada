@@ -28,8 +28,8 @@ class LoginController extends Core\Controller
     {
       if (!empty($_POST["login-user"]) && !empty($_POST["login-password"]))
       {
-        $E->usrName = trim($_POST["login-user"]);
-        $E->usrSenha = trim($_POST["login-password"]);
+        $E->usr_name = trim($_POST["login-user"]);
+        $E->usr_senha = trim($_POST["login-password"]);
         $usuario = $U->verificarUsuario($E);
       }
       else
@@ -40,7 +40,7 @@ class LoginController extends Core\Controller
 
     if ($usuario != false)
     {
-      $validPassword = password_verify($E->usrSenha, $usuario->usr_senha);
+      $validPassword = password_verify($E->usr_senha, $usuario->usr_senha);
       
       if ($validPassword)
       {

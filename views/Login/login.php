@@ -2,26 +2,22 @@
 include BASE_PATH . 'assets/inc/config.php';
 include BASE_PATH . 'assets/inc/template_start.php';
 ?>
-<!-- Login Container -->
+<img src="<?php echo BASE_URL?>assets/img/background.jpg" class="full-bg animation-pulseSlow" style="filter: blur(1.5px); opacity:0.2;">
 <div id="login-container">
-    <!-- Login Header -->
     <h1 class="h2 text-light text-center push-top-bottom animation-slideDown">
-        <i class="fa fa-cube"></i> <strong>Sistema ERP</strong>
+        <i class="fa fa-bed"></i> Modular<strong>Inn</strong>
     </h1>
-    <!-- END Login Header -->
 
-    <!-- Login Block -->
     <div class="block animation-fadeInQuickInv">
-        <!-- Login Form -->
         <form id="form-login" action="<?php echo BASE_URL?>login/login" method="post" class="form-horizontal">
             <div class="form-group">
                 <div class="col-xs-12">
-                    <input type="text" id="login-user" name="login-user" class="form-control" placeholder="Usuario..">
+                    <input type="text" id="login-user" name="login-user" class="form-control" placeholder="Usuario...">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-xs-12">
-                    <input type="password" id="login-password" name="login-password" class="form-control" placeholder="Senha..">
+                    <input type="password" id="login-password" name="login-password" class="form-control" placeholder="Senha...">
                 </div>
             </div>
             <?php if(isset($erros)) : ?>
@@ -42,20 +38,12 @@ include BASE_PATH . 'assets/inc/template_start.php';
                 </div>
             </div>
         </form>
-        <!-- END Login Form -->
     </div>
-    <!-- END Login Block -->
-
-    <!-- Footer -->
     <footer class="text-muted text-center animation-pullUp">
         <small><span id="year-copy"></span> &copy; <a href="#" target="_blank"><?php echo $template['name'] . ' ' . $template['version']; ?></a></small>
     </footer>
-    <!-- END Footer -->
 </div>
-<!-- END Login Container -->
 
 <?php include BASE_PATH . 'assets/inc/template_scripts.php'; ?>
-<!-- <script type="text/javascript"> //location.reload(true); </script> -->
-<!-- Load and execute javascript code used only in this page -->
 <script src="<?php echo BASE_URL?>assets/js/pages/readyLogin.js"></script>
 <script>$(function(){ ReadyLogin.init(); });</script>

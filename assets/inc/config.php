@@ -11,12 +11,12 @@
 
 /* Template variables */
 $template = array(
-  'name'              => 'Sistema ERP para Pousadas',
+  'name'              => 'ModularInn',
   'version'           => '1.0.0',
   'author'            => 'Lucas A. & Vinícius S.',
   'robots'            => 'noindex, nofollow',
-  'title'             => 'Sistema ERP para Pousadas',
-  'description'       => 'Sistema ERP para Pousadas',
+  'title'             => 'ModularInn',
+  'description'       => 'ModularInn',
   // true                         enable page preloader
   // false                        disable page preloader
   'page_preloader'    => true,
@@ -39,7 +39,7 @@ $template = array(
   // 'enable-cookies'             Enables cookies for remembering active color theme when changed from the sidebar links (the next color theme variable will be ignored)
   'cookies'           => '',
   // '', 'classy', 'social', 'flat', 'amethyst', 'creme', 'passion'
-  'theme'             => 'social',
+  'theme'             => 'amethyst',
   // Used as the text for the header link - You can set a value in each page if you like to enable it in the header
   'header_link'       => '',
   // The name of the files in the inc/ folder to be included in page_head.php - Can be changed per page if you

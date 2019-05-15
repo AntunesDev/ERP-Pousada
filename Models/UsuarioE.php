@@ -3,8 +3,8 @@
 
 	class UsuarioE
 	{
-		public $usrId;
-		public $usrName;
-		public $usrSenha;
-		public $usrGrupo;
+		public $usr_id;
+		public $usr_name;
+		public $usr_senha;
+		public $usr_grupo;
 	}
