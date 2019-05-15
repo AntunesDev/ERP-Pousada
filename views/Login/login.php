@@ -12,12 +12,18 @@ include BASE_PATH . 'assets/inc/template_start.php';
         <form id="form-login" action="<?php echo BASE_URL?>login/login" method="post" class="form-horizontal">
             <div class="form-group">
                 <div class="col-xs-12">
-                    <input type="text" id="login-user" name="login-user" class="form-control" placeholder="Usuario...">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <input type="text" id="login-user" name="login-user" class="form-control" placeholder="Usuário">
+                    </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-xs-12">
-                    <input type="password" id="login-password" name="login-password" class="form-control" placeholder="Senha...">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                        <input type="password" id="login-password" name="login-password" class="form-control" placeholder="Senha">
+                    </div>
                 </div>
             </div>
             <?php if(isset($erros)) : ?>
