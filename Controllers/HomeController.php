@@ -11,7 +11,6 @@ class HomeController extends Core\Controller {
     }
 
     public function index() {
-
         $data = [];
 
         $data["message"] = "Hello MVC World";

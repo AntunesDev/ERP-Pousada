@@ -1,5 +1,5 @@
 <?php
-include BASE_PATH . 'assets/inc/config.php'; $template['header_link'] = 'ERP - Pousada';
+include BASE_PATH . 'assets/inc/config.php';
 include BASE_PATH . 'assets/inc/template_start.php';
 include BASE_PATH . 'assets/inc/page_head.php'; ?>
 
