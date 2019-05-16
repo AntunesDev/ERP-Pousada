@@ -12,6 +12,21 @@ class Usuario extends Core\Model
 		parent::__construct();
 	}
 
+	public function buscarUsuario($UsuarioE)
+	{
+		try
+		{
+			$sql = $this->db->prepare("SELECT usr_id, usr_name, usr_grupo FROM usuarios WHERE usr_id = :usr_id;");
+			$sql->bindParam(":usr_id", $UsuarioE->usr_id);
+			$sql->execute();
+			return $sql->fetch(PDO::FETCH_OBJ);
+		}
+		catch(Exception $exception)
+		{
+			throw new Exception($exception, 500);
+		}
+	}
+
 	public function verificarUsuario($UsuarioE)
 	{
 		try
@@ -77,7 +92,6 @@ class Usuario extends Core\Model
 
 	public function excluirUsuario($UsuarioE)
 	{
-		$this->db->beginTransaction();
 		try
 		{
 			$sql = $this->db->prepare("DELETE FROM usuarios WHERE usr_id = :usr_id;",
@@ -141,7 +155,7 @@ class Usuario extends Core\Model
 	{
 		try
 		{
-			$sql = $this->db->prepare("SELECT * FROM usuarios;");
+			$sql = $this->db->prepare("SELECT * FROM usuarios JOIN grupos_acessos ON grp_id = usr_grupo LEFT JOIN funcionarios ON fnc_usuario = usr_id;");
 			$sql->execute();
 			return $sql->fetchAll(PDO::FETCH_ASSOC);
 		}
@@ -149,5 +163,40 @@ class Usuario extends Core\Model
 		{
 			throw new Exception($exception, 500);
 		}
+	}
+
+	public function consultarUsuariosSearch($searchText, $orderColumn, $orderDir, $start, $rows)
+	{
+		if(is_numeric($rows) == false)
+			die();
+
+		$strSQL = "SELECT
+			usr_id,
+			usr_name,
+			grp_nome AS usr_grupo,
+			fnc_nome AS usr_nome
+		FROM usuarios
+		JOIN grupos_acessos ON grp_id = usr_grupo
+		LEFT JOIN funcionarios ON fnc_usuario = usr_id
+		WHERE
+			usr_name LIKE :searchText
+			OR fnc_nome LIKE :searchText
+		ORDER BY ".$orderColumn." ".$orderDir."
+		LIMIT :start, :rows;";
+		
+		$sql = $this->db->prepare($strSQL);
+
+		if(empty($searchText))
+			$searchText = '%';
+		else
+			$searchText = '%'.$searchText.'%';
+
+		$sql->bindParam(":searchText", $searchText);
+		$sql->bindParam(":start", $start, PDO::PARAM_INT);
+		$sql->bindParam(":rows", $rows, PDO::PARAM_INT);
+		$sql->execute();
+
+		$row = $sql->fetchAll(PDO::FETCH_ASSOC);
+		return $row;
 	}
 }

@@ -4,7 +4,7 @@ namespace Controllers;
 use Core, Models, Exception;
 use Core\Config;
 
-class UsuarioController extends Core\Controller
+class UsuariosController extends Core\Controller
 {
   public function __construct()
   {
@@ -15,7 +15,36 @@ class UsuarioController extends Core\Controller
   public function index()
   {
     $data = [];
-    $this->loadTemplate('Home/home', $data);
+    $this->loadTemplate('Usuario/cadastro', $data);
+  }
+
+  public function buscarUsuario()
+  {
+    try
+    {
+      $requestData = $_REQUEST;
+
+      $Usuario = new Models\Usuario();
+      $UsuarioE = new Models\UsuarioE();
+
+      $UsuarioE->usr_id = $requestData["usr_id"];
+      $result = $Usuario->buscarUsuario($UsuarioE);
+
+      if ($result === false)
+      {
+        $json_data = ["success" => false, "message" => "Ocorreu um erro ao buscar os dados do usuário!"];
+      }
+      else
+      {
+        $json_data = ["success" => true, "result" => $result];
+      }
+
+      echo json_encode($json_data);
+    }
+    catch (Exception $exception)
+    {
+      throw new Exception($exception, 500);
+    }
   }
 
   public function incluirUsuario()
@@ -168,19 +197,66 @@ class UsuarioController extends Core\Controller
   {
     try
     {
+      $requestData = $_REQUEST;
+
       $Model = new Models\Usuario();
 
-      $result = $Model->consultarUsuarios();
-      if (count($result) > 0)
+      $columns = array(
+        0 => 'usr_id',
+        1 => 'usr_name',
+        2 => 'usr_grupo',
+        3 => 'usr_nome'
+      );
+
+      $draw = $requestData['draw'];
+      $search = $requestData['search']['value'];
+      $order = $columns[$requestData['order'][0]['column']];
+      $dir = $requestData['order'][0]['dir'];
+      $start = (int) $requestData['start'];
+      $length = (int) $requestData['length'];
+
+      $totalData = count($Model->consultarUsuarios());
+      $lSCadastro = $Model->consultarUsuariosSearch($search, $order, $dir, $start, $length);
+
+      if ($totalData > 0)
       {
-        $jsondata['success'] = true;
-        $jsondata['result'] = $result;
+          array_walk_recursive($lSCadastro, function(&$value)
+          {
+              $value = $this->Helper->removeAccents(str_replace('"', '', utf8_encode($value)));
+          });
+      }
+
+      if (empty($search))
+      {
+        $totalFiltered = $totalData;
       }
       else
       {
-        $jsondata['success'] = false;
+        $totalFiltered = count($lSCadastro);
       }
-      echo json_encode($jsondata);
+
+      $data = array();
+      foreach ($lSCadastro as $outer_key => $array)
+      {
+        $nestedData = array();
+        foreach($array as $inner_key => $value)
+        {
+          if (!(int)$inner_key)
+          {
+            $nestedData[$inner_key] = $value;
+          }
+        }
+        $data[] = $nestedData;
+      }
+
+      $json_data = array(
+        "draw"            => intval($draw),
+        "recordsTotal"    => intval($totalData),
+        "recordsFiltered" => intval($totalFiltered),
+        "records"         => $data
+      );
+
+      echo json_encode($json_data);
     }
     catch (Exception $exception)
     {
