@@ -10,7 +10,7 @@
     <ul class="nav navbar-nav-custom pull-right">
         <li class="dropdown">
             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                <img src="<?php echo BASE_URL?>assets/img/placeholders/avatars/avatar9.jpg" alt="avatar">
+                <img src="<?php echo BASE_URL?>assets/img/placeholders/avatars/avatar.png" alt="avatar">
             </a>
             <ul class="dropdown-menu dropdown-menu-right">
                 <li class="dropdown-header">
