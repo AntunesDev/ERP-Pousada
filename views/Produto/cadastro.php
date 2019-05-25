@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-6">
             <div class="header-section">
-                <h1>Cadastro de Usuários</h1>
+                <h1>Cadastro de Produtos</h1>
             </div>
         </div>
         <div class="col-sm-6">
@@ -26,22 +26,16 @@
     </div>
     <div class="block-section">
         <form id='cadastro-form' class="form-horizontal" onsubmit="return false;">
-            <input type="hidden" name="usr_id" id="usr_id" value=0>
+            <input type="hidden" name="prd_id" id="prd_id" value=0>
             <div class="block">
                 <div class="form-group">
-                    <label class="col-md-2 control-label" for="usr_name">Login</label>
+                    <label class="col-md-2 control-label" for="prd_descricao">Descrição</label>
                     <div class="col-md-3">
-                        <input type="text" name="usr_name" id="usr_name" class="form-control" required autocomplete="nope">
+                        <input type="text" name="prd_descricao" id="prd_descricao" class="form-control" required autocomplete="nope">
                     </div>
-                    <label class="col-md-2 col-md-offset-2 control-label" for="usr_senha">Senha</label>
+                    <label class="col-md-2 control-label" for="prd_valor">Valor</label>
                     <div class="col-md-3">
-                        <input type="password" name="usr_senha" id="usr_senha" class="form-control" required autocomplete="nope">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 col-md-offset-6 control-label" for="usr_grupo">Grupo de Acesso</label>
-                    <div class="col-md-4">
-                        <select id="usr_grupo" name="usr_grupo" class="form-control" required autocomplete="nope"></select>
+                        <input type="text" name="prd_valor" id="prd_valor" class="form-control" required autocomplete="nope">
                     </div>
                 </div>
             </div>
@@ -51,13 +45,12 @@
 <div class="block">
     <div class="block-section">
         <div class="table-responsive">
-            <table id="usuario-datatable" class="table table-striped table-bordered table-vcenter" style="width: 100%;">
+            <table id="produto-datatable" class="table table-striped table-bordered table-vcenter" style="width: 100%;">
                 <thead>
                     <tr>
                         <th class="text-center">Identificador</th>
-                        <th class="text-center">Login</th>
-                        <th class="text-center">Grupo de Acessos</th>
-                        <th class="text-center">Nome</th>
+                        <th class="text-center">Descrição</th>
+                        <th class="text-center">Preço</th>
                     </tr>
                 </thead>
             </table>
@@ -82,4 +75,4 @@
 <script src="<?php echo BASE_URL?>assets/js/modulos/gral/Crud.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/modulos/gral/Datatable.js"></script>
 <!-- module related script to load -->
-<script src="<?php echo BASE_URL?>assets/js/modulos/usuario/cadastro.js"></script>
+<script src="<?php echo BASE_URL?>assets/js/modulos/produto/cadastro.js"></script>

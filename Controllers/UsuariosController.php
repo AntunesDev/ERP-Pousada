@@ -36,6 +36,10 @@ class UsuariosController extends Core\Controller
       }
       else
       {
+        array_walk_recursive($result, function(&$value)
+        {
+          $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], utf8_encode($value)));
+        });
         $json_data = ["success" => true, "result" => $result];
       }
 

@@ -57,14 +57,14 @@ class Produto extends Core\Model
 		}
 	}
 
-	public function consultarProduto($ProdutoE)
+	public function buscarProduto($ProdutoE)
 	{
 		try
 		{
 			$sql = $this->db->prepare("SELECT * FROM produtos WHERE prd_id = :prd_id;");
 			$sql->bindParam(":prd_id", $ProdutoE->prd_id);
 			$sql->execute();
-			return $sql->fetchAll(PDO::FETCH_ASSOC);
+			return $sql->fetch(PDO::FETCH_OBJ);
 		}
 		catch(Exception $exception)
 		{
@@ -130,6 +130,51 @@ class Produto extends Core\Model
 		{
 			throw new Exception($exception, 500);
 		}
+	}
+
+	public function consultarProdutos()
+	{
+		try
+		{
+			$sql = $this->db->prepare("SELECT * FROM produtos;");
+			$sql->execute();
+			return $sql->fetchAll(PDO::FETCH_ASSOC);
+		}
+		catch(Exception $exception)
+		{
+			throw new Exception($exception, 500);
+		}
+	}
+
+	public function consultarProdutosSearch($searchText, $orderColumn, $orderDir, $start, $rows)
+	{
+		if(is_numeric($rows) == false)
+			die();
+
+		$strSQL = "SELECT
+			prd_id,
+			prd_descricao,
+			prd_valor
+		FROM produtos
+		WHERE
+			prd_descricao LIKE :searchText
+		ORDER BY ".$orderColumn." ".$orderDir."
+		LIMIT :start, :rows;";
+		
+		$sql = $this->db->prepare($strSQL);
+
+		if(empty($searchText))
+			$searchText = '%';
+		else
+			$searchText = '%'.$searchText.'%';
+
+		$sql->bindParam(":searchText", $searchText);
+		$sql->bindParam(":start", $start, PDO::PARAM_INT);
+		$sql->bindParam(":rows", $rows, PDO::PARAM_INT);
+		$sql->execute();
+
+		$row = $sql->fetchAll(PDO::FETCH_ASSOC);
+		return $row;
 	}
 
 	public function gerarRelProd()
