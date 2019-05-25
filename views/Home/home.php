@@ -1,13 +1,13 @@
 
 <div class="content-header">
         <div class="row">
-            <div class="col-sm-6">
-                <div class="header-section">
+            <div class="col-sm-3">
+                <div class="header-section text-center">
                     <h1>Dashboard</h1>
                 </div>
             </div>
-            <div class="col-sm-6 hidden-xs">
-                <div class="header-section"></div>
+            <div class="col-sm-9">
+                <div class="header-section text-center"></div>
             </div>
         </div>
     </div>

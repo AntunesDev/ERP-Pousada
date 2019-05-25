@@ -1,12 +1,12 @@
 <div class="content-header">
     <div class="row">
-        <div class="col-sm-6">
-            <div class="header-section">
+        <div class="col-sm-3">
+            <div class="header-section text-center">
                 <h1>Cadastro de Produtos</h1>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="header-section">
+        <div class="col-sm-9">
+            <div class="header-section text-center">
                 <button id="delete-btn" class="btn btn-danger pull-right"style="margin: 2px;">
                     <span class="fa fa-times"></span> <span class="hidden-xs">Excluir</span>
                 </button>
