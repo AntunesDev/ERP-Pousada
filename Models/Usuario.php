@@ -155,7 +155,7 @@ class Usuario extends Core\Model
 	{
 		try
 		{
-			$sql = $this->db->prepare("SELECT * FROM usuarios JOIN grupos_acessos ON grp_id = usr_grupo LEFT JOIN funcionarios ON fnc_usuario = usr_id;");
+			$sql = $this->db->prepare("SELECT * FROM usuarios JOIN grupos_acessos ON grp_id = usr_grupo LEFT JOIN funcionarios ON fnc_usuario = usr_id WHERE usr_id <> 1;");
 			$sql->execute();
 			return $sql->fetchAll(PDO::FETCH_ASSOC);
 		}
@@ -179,8 +179,11 @@ class Usuario extends Core\Model
 		JOIN grupos_acessos ON grp_id = usr_grupo
 		LEFT JOIN funcionarios ON fnc_usuario = usr_id
 		WHERE
-			usr_name LIKE :searchText
-			OR fnc_nome LIKE :searchText
+			usr_id <> 1
+			AND (
+				usr_name LIKE :searchText
+				OR fnc_nome LIKE :searchText
+			)
 		ORDER BY ".$orderColumn." ".$orderDir."
 		LIMIT :start, :rows;";
 		
