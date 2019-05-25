@@ -25,6 +25,6 @@ class Controller extends Acl {
   }
   
   public function loadTemplateError() {
-		include 'views/template/error.php';
+		include 'views/error.php';
 	}
 }

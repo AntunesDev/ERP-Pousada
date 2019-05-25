@@ -1,6 +1,8 @@
 <?php
 namespace Core;
 
+use Controllers\ErrorController;
+
 class Core {
 
   public function run() {
@@ -30,7 +32,8 @@ class Core {
     if (class_exists($currentController)) {
       $c = new $currentController;
     } else {
-      include BASE_URL.'views/template/error.php';
+      $c = new ErrorController();
+      $currentAction = 'index';
       //throw new \Exception("Class $currentController (in Controllers namespace) not found", 404);
     }
 
