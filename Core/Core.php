@@ -30,7 +30,8 @@ class Core {
     if (class_exists($currentController)) {
       $c = new $currentController;
     } else {
-      throw new \Exception("Class $currentController (in Controllers namespace) not found", 404);
+      include BASE_URL.'views/template/error.php';
+      //throw new \Exception("Class $currentController (in Controllers namespace) not found", 404);
     }
 
     if (method_exists($c, $currentAction)) {
