@@ -1,74 +1,121 @@
-
-<div class="content-header">
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="header-section text-center">
-                    <h1>Dashboard</h1>
-                </div>
-            </div>
-            <div class="col-sm-9">
-                <div class="header-section text-center"></div>
-            </div>
+<!-- First Row -->
+<div class="row">
+  <!-- Simple Stats Widgets -->
+  <div class="col-sm-6 col-lg-4">
+    <a href="javascript:void(0)" class="widget">
+      <div class="widget-content widget-content-mini text-right clearfix">
+        <div class="widget-icon pull-left themed-background">
+          <i class="gi gi-cardio text-light-op"></i>
         </div>
-    </div>
-    <div class="block full">
-        <div class="block-title">
-            <h2>Block here</h2>
+        <h2 class="widget-heading h3">
+          <strong><span data-toggle="counter" data-to="2835"></span></strong>
+        </h2>
+        <span class="text-muted">RESERVAS NO ÚLTIMO MÊS</span>
+      </div>
+    </a>
+  </div>
+  <div class="col-sm-6 col-lg-4">
+    <a href="javascript:void(0)" class="widget">
+      <div class="widget-content widget-content-mini text-right clearfix">
+        <div class="widget-icon pull-left themed-background-success">
+          <i class="gi gi-user text-light-op"></i>
         </div>
+        <h2 class="widget-heading h3 text-success">
+          <strong>+ <span data-toggle="counter" data-to="2862"></span></strong>
+        </h2>
+        <span class="text-muted">HÓSPEDES HOJE</span>
+      </div>
+    </a>
+  </div>
+  <div class="col-sm-6 col-lg-4">
+    <a href="javascript:void(0)" class="widget">
+      <div class="widget-content widget-content-mini text-right clearfix">
+        <div class="widget-icon pull-left themed-background-warning">
+          <i class="gi gi-cutlery text-light-op"></i>
+        </div>
+        <h2 class="widget-heading h3 text-warning">
+          <strong>+ <span data-toggle="counter" data-to="75"></span></strong>
+        </h2>
+        <span class="text-muted">PRODUTOS VENDIDOS</span>
+      </div>
+    </a>
+  </div>
+  <!-- END Simple Stats Widgets -->
+</div>
+<!-- END First Row -->
 
-        <pre style="border: 0; background-color: #CCC;">
-          <?php
-            print_r($_SESSION["app_erp_pousada"]);
-          ?>
-        </pre>
-        
-        <button id="alertaSuccess" type="button" name="button" class="btn btn-success">Boton</button>
-        <button id="alertaError" type="button" name="button" class="btn btn-danger">Boton</button>
-        <button id="alertaWarning" type="button" name="button" class="btn btn-warning">Boton</button>
-        <button id="alertaModal" type="button" name="button" class="btn btn-primary">Boton</button>
-        <button id="insert-mvc" type="button" name="button" class="btn btn-primary">Insert Post</button>
-
+<!-- Second Row -->
+<div class="row">
+  <div class="col-sm-6 col-lg-8" id="chartCol">
+    <!-- Chart Widget -->
+    <div class="widget">
+      <div class="widget-content border-bottom">
+        <span class="pull-right text-muted">2019</span>
+        Dados de um ano
+      </div>
+      <div class="widget-content border-bottom themed-background-muted">
+        <!-- Flot Charts (initialized in js/pages/readyDashboard.js), for more examples you can check out http://www.flotcharts.org/ -->
+        <div id="chart-classic-dash" style="height: 393px;"></div>
+      </div>
+      <div class="widget-content widget-content-full">
+        <div class="row text-center">
+          <div class="col-xs-4 push-inner-top-bottom border-right">
+            <h3 class="widget-heading"><i class="gi gi-wallet text-dark push-bit"></i> <br><small>R$ 41.000,00</small></h3>
+          </div>
+          <div class="col-xs-4 push-inner-top-bottom">
+            <h3 class="widget-heading"><i class="gi gi-cardio text-dark push-bit"></i> <br><small>17.000 Reservas</small></h3>
+          </div>
+          <div class="col-xs-4 push-inner-top-bottom border-left">
+            <h3 class="widget-heading"><i class="gi gi-cutlery text-dark push-bit"></i> <br><small>3.000+ Produtos Consumidos</small></h3>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div id="Modal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title">Confirmação</h4>
+    <!-- END Chart Widget -->
+  </div>
+  <div class="col-sm-4" id="statsCol">
+    <!-- Statistics Widget -->
+    <div class="widget">
+      <div class="widget-content border-bottom">
+        <span class="pull-right text-muted"><i class="fa fa-check"></i></span>
+        Movimentação da Semana
       </div>
-      <div class="modal-body">
-        <p><h3>Orçamento gerado com Sucesso!<h3></p>
-        <p>
-        	<h4>
-            	<strong>Vendedor:</strong>&nbsp; <span id="cVendedor"></span> &nbsp;&nbsp;
-                <strong>Nota:</strong>&nbsp; <span id="cNota"></span> &nbsp;&nbsp;
-                <strong>Orçamento:</strong>&nbsp; <span id="cOrcamento"></span>
-            </h4>
-        </p>
-        <p><h4>Orçamento enviado para a impressora!<h4></p>
+      <div class="widget-content border-bottom themed-background-muted text-center">
+        <span id="widget-dashchart-sales">12,15,14,18,16,15,16,17</span>
       </div>
-      <!--<div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>-->
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+      <div class="widget-content widget-content-full-top-bottom border-bottom">
+        <div class="row text-center">
+          <div class="col-xs-4 push-inner-top-bottom border-right">
+            <h3 class="widget-heading"><i class="gi gi-book_open text-dark push"></i> <br><small>123 Reservas</small></h3>
+          </div>
+          <div class="col-xs-4 push-inner-top-bottom">
+            <h3 class="widget-heading"><i class="gi gi-user_add text-dark push"></i> <br><small>+10% Clientes</small></h3>
+          </div>
+          <div class="col-xs-4 push-inner-top-bottom border-left">
+            <h3 class="widget-heading"><i class="gi gi-cutlery text-dark push"></i> <br><small>10 Produtos Consumidos</small></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Statistics Widget -->
+  </div>
+</div>
+<!-- END Second Row -->
 
-    <!-- obligatory scripts to load -->
-    <?php include BASE_PATH . 'assets/inc/page_footer.php'; ?>
-    <?php include BASE_PATH . 'assets/inc/template_scripts.php'; ?>
-    <!-- on demand scripts to load -->
-    <script src="<?php echo BASE_URL?>assets/js/modulos/gral/checkSession.js"></script>
-    <script src="<?php echo BASE_URL?>assets/js/modulos/gral/changeSegmentType.js"></script>
-    <script src="<?php echo BASE_URL?>assets/js/pages/formsValidation.js"></script>
-    <script src="<?php echo BASE_URL?>assets/js/pages/readyDashboard.js"></script>
-    <script>//$(function(){ ReadyDashboard.init(); });</script>
-    <script>$(function() { FormsValidation.init(); });</script>
-    <script src="<?php echo BASE_URL?>assets/js/pages/sweetalert.min.js"></script>
-    <script src="<?php echo BASE_URL?>assets/js/pages/jquery.inputmask.bundle.min.js"></script>
-    <script src="<?php echo BASE_URL?>assets/js/pages/jquery.number.min.js"></script>
-    <!-- module related script to load -->
-    <script type="text/javascript">  var BASE_URL = '<?php echo BASE_URL; ?>'; </script>
-    <script src="<?php echo BASE_URL?>assets/js/modulos/home/home.js"></script>
+<!-- obligatory scripts to load -->
+<?php include BASE_PATH . 'assets/inc/page_footer.php'; ?>
+<?php include BASE_PATH . 'assets/inc/template_scripts.php'; ?>
+<script src="<?php echo BASE_URL ?>assets/js/modulos/gral/checkSession.js"></script>
+<!-- on demand scripts to load -->
+<script src="<?php echo BASE_URL ?>assets/js/pages/readyDashboard.js"></script>
+<script>
+  $(function() {
+    ReadyDashboard.init();
+  });
+</script>
+<script src="<?php echo BASE_URL ?>assets/js/pages/sweetalert.min.js"></script>
+<!-- module related script to load -->
+<script type="text/javascript">
+  var BASE_URL = '<?php echo BASE_URL; ?>';
+</script>
+<script src="<?php echo BASE_URL ?>assets/js/modulos/home/home.js"></script>

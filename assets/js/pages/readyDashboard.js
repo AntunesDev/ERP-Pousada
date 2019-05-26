@@ -39,7 +39,7 @@ var ReadyDashboard = function() {
                 highlightLineColor: '#555555',
                 spotRadius: 3,
                 tooltipPrefix: '',
-                tooltipSuffix: ' Sales',
+                tooltipSuffix: ' Reservas',
                 tooltipFormat: '{{prefix}}{{y}}{{suffix}}'
             };
             $('#widget-dashchart-sales').sparkline('html', widgetChartLineOptions);
@@ -65,19 +65,19 @@ var ReadyDashboard = function() {
             $.plot(chartClassicDash,
                 [
                     {
-                        label: 'Earnings',
+                        label: 'Rendimento',
                         data: dataEarnings,
                         lines: {show: true, fill: true, fillColor: {colors: [{opacity: .6}, {opacity: .6}]}},
                         points: {show: true, radius: 5}
                     },
                     {
-                        label: 'Sales',
+                        label: 'Reservas',
                         data: dataSales,
                         lines: {show: true, fill: true, fillColor: {colors: [{opacity: .6}, {opacity: .6}]}},
                         points: {show: true, radius: 5}
                     },
                     {
-                        label: 'Tickets',
+                        label: 'Produtos',
                         data: dataTickets,
                         lines: {show: true, fill: true, fillColor: {colors: [{opacity: .6}, {opacity: .6}]}},
                         points: {show: true, radius: 5}
@@ -104,11 +104,11 @@ var ReadyDashboard = function() {
                         var x = item.datapoint[0], y = item.datapoint[1];
 
                         if (item.seriesIndex === 0) {
-                            ttlabel = '$ <strong>' + y + '</strong>';
+                            ttlabel = 'R$ <strong>' + y + '</strong>';
                         } else if (item.seriesIndex === 1) {
-                            ttlabel = '<strong>' + y + '</strong> sales';
+                            ttlabel = '<strong>' + y + '</strong> reservas';
                         } else {
-                            ttlabel = '<strong>' + y + '</strong> tickets';
+                            ttlabel = '<strong>' + y + '</strong> produtos consumidos';
                         }
 
                         $('<div id="chart-tooltip" class="chart-tooltip">' + ttlabel + '</div>')
