@@ -63,16 +63,10 @@
 <script type="text/javascript"> var BASE_URL = '<?php echo BASE_URL; ?>';</script>
 <!-- on demand scripts to load -->
 <script src="<?php echo BASE_URL?>assets/js/modulos/gral/checkSession.js"></script>
-<script src="<?php echo BASE_URL?>assets/js/modulos/gral/changeSegmentType.js"></script>
-<script src="<?php echo BASE_URL?>assets/js/pages/formsValidation.js"></script>
-<script src="<?php echo BASE_URL?>assets/js/pages/readyDashboard.js"></script>
-<script>//$(function(){ ReadyDashboard.init(); });</script>
-<script>$(function() { FormsValidation.init(); });</script>
 <script src="<?php echo BASE_URL?>assets/js/pages/sweetalert.min.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/pages/jquery.inputmask.bundle.min.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/pages/jquery.number.min.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/lang/pt/message.js"></script>
-<script src="<?php echo BASE_URL?>assets/js/modulos/gral/Crud.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/modulos/gral/Datatable.js"></script>
 <!-- module related script to load -->
 <script src="<?php echo BASE_URL?>assets/js/modulos/produto/cadastro.js"></script>
