@@ -115,7 +115,6 @@ class Produto extends Core\Model
 
 	public function excluirProduto($ProdutoE)
 	{
-		$this->db->beginTransaction();
 		try
 		{
 			$sql = $this->db->prepare("DELETE FROM produtos WHERE prd_id = :prd_id;",
