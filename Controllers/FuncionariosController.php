@@ -1,7 +1,9 @@
 <?php
   namespace Controllers;
+
   use Core, Models, Exception;
   use Core\Config;
+
   class FuncionariosController extends Core\Controller
   {
     public function __construct()
@@ -9,19 +11,24 @@
       parent::__construct();
       $this->isLoggedIn();
     }
+
     public function index()
     {
       $data = [];
       $this->loadTemplate('Funcionario/cadastro', $data);
     }
+    
     public function consultarFuncionario()
     {
       try
       {
         $requestData = $_REQUEST;
+        
         $Funcionario = new Models\Funcionario();
         $FuncionarioE = new Models\FuncionarioE();
+        
         $FuncionarioE->fnc_id = $requestData["fnc_id"];
+        
         $result = $Funcionario->consultarFuncionario($FuncionarioE);
         if ($result === false)
         {
@@ -31,6 +38,7 @@
         {
           $json_data = ["success" => true, "result" => $result];
         }
+
         echo json_encode($json_data);
       }
       catch (Exception $exception)
@@ -38,6 +46,7 @@
         throw new Exception($exception, 500);
       }
     }
+
     public function cadastrarFuncionario()
     {
       try
@@ -60,52 +69,52 @@
         else if (is_numeric($requestData["fnc_rg"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do RG não pode estar em branco.";
+          $jsondata["message"] = "O RG não pode estar em branco.";
         }
         else if (is_numeric($requestData["fnc_cpf"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do CPF não pode estar em branco.";
+          $jsondata["message"] = "O CPF não pode estar em branco.";
         }
         else if (is_numeric($requestData["fnc_telefone"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do telefone não pode estar em branco.";
+          $jsondata["message"] = "O telefone não pode estar em branco.";
         }
         else if (empty($requestData["fnc_email"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do email não pode estar em branco.";
+          $jsondata["message"] = "O email não pode estar em branco.";
         }
         else if (empty($requestData["fnc_endereco"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do endereço não pode estar em branco.";
+          $jsondata["message"] = "O endereço não pode estar em branco.";
         }
         else if (empty($requestData["fnc_cidade"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do cidade não pode estar em branco.";
+          $jsondata["message"] = "A cidade não pode estar em branco.";
         }
         else if (empty($requestData["fnc_funcao"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor da função do funcionário não pode estar em branco.";
+          $jsondata["message"] = "A função do funcionário não pode estar em branco.";
         }
         else if (empty($requestData["fnc_salario"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do salario não pode estar em branco.";
+          $jsondata["message"] = "O salario não pode estar em branco.";
         }
         else if (is_numeric($requestData["fnc_salario"]) == false)
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do salario não pode estar em branco.";
+          $jsondata["message"] = "O salario inserido é inválido.";
         }
         else if (empty($requestData["fnc_usuario"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do usuário não pode estar em branco.";
+          $jsondata["message"] = "O usuário não pode estar em branco.";
         }
         else
         {
@@ -133,6 +142,7 @@
             $jsondata['message'] = $resp;
           }
         }
+
         echo json_encode($jsondata);
       }
       catch (Exception $exception)
@@ -185,12 +195,11 @@
           $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], utf8_encode($value)));
         });
 
-         if (empty($requestData["fnc_id"]))
+        if (empty($requestData["fnc_id"]))
         {
           $jsondata["success"] = false;
           $jsondata["message"] = "Ocorreu um erro ao identificar o funcionário a ser alterado.";
         }
-
         else if (empty($requestData["fnc_nome"]))
         {
           $jsondata["success"] = false;
@@ -199,52 +208,52 @@
         else if (is_numeric($requestData["fnc_rg"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do RG não pode estar em branco.";
+          $jsondata["message"] = "O RG não pode estar em branco.";
         }
         else if (is_numeric($requestData["fnc_cpf"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do CPF não pode estar em branco.";
+          $jsondata["message"] = "O CPF não pode estar em branco.";
         }
         else if (is_numeric($requestData["fnc_telefone"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do telefone não pode estar em branco.";
+          $jsondata["message"] = "O telefone não pode estar em branco.";
         }
         else if (empty($requestData["fnc_email"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do email não pode estar em branco.";
+          $jsondata["message"] = "O email não pode estar em branco.";
         }
         else if (empty($requestData["fnc_endereco"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do endereço não pode estar em branco.";
+          $jsondata["message"] = "O endereço não pode estar em branco.";
         }
         else if (empty($requestData["fnc_cidade"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do cidade não pode estar em branco.";
+          $jsondata["message"] = "O cidade não pode estar em branco.";
         }
         else if (empty($requestData["fnc_funcao"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor da função do funcionário não pode estar em branco.";
+          $jsondata["message"] = "O função do funcionário não pode estar em branco.";
         }
         else if (empty($requestData["fnc_salario"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do salario não pode estar em branco.";
+          $jsondata["message"] = "O salario não pode estar em branco.";
         }
         else if (is_numeric($requestData["fnc_salario"]) == false)
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do salario não pode estar em branco.";
+          $jsondata["message"] = "O salario não pode estar em branco.";
         }
         else if (empty($requestData["fnc_usuario"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O valor do usuário não pode estar em branco.";
+          $jsondata["message"] = "O usuário não pode estar em branco.";
         }
         else
         {
@@ -279,7 +288,8 @@
         throw new Exception($exception, 500);
       }
     }
-    public function consultarFuncionario()
+
+    public function consultarFuncionarios()
     {
       try
       {
@@ -316,7 +326,7 @@
         {
           array_walk_recursive($lSCadastro, function(&$value)
           {
-              $value = $this->Helper->removeAccents(str_replace('"', '', utf8_encode($value)));
+            $value = $this->Helper->removeAccents(str_replace('"', '', utf8_encode($value)));
           });
         }
 
