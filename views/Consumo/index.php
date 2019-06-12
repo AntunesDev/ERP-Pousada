@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-3">
             <div class="header-section text-center">
-                <h1>Produtos</h1>
+                <h1>Consumo</h1>
             </div>
         </div>
         <div class="col-sm-9">
@@ -10,14 +10,14 @@
                 <button id="delete-btn" class="btn btn-danger pull-right"style="margin: 2px;">
                     <span class="fa fa-times"></span> <span class="hidden-xs">Excluir</span>
                 </button>
-                <button id="limpar-btn" class="btn btn-warning pull-right"style="margin: 2px;">
-                    <span class="fa fa-arrow-up"></span> <span class="hidden-xs">Limpar</span>
-                </button>
                 <button id="add-btn" class="btn btn-info pull-right"style="margin: 2px;">
                     <span class="fa fa-plus"></span> <span class="hidden-xs">Incluir / Alterar</span>
                 </button>
                 <button id="print-btn" class="btn btn-success pull-right" style="margin: 2px;">
                     <span class="fa fa-print"></span> <span class="hidden-xs">Relatório</span>
+                </button>
+                <button id="voltar-btn" class="btn btn-warning pull-right"style="margin: 2px;">
+                    <span class="fa fa-arrow-left"></span> <span class="hidden-xs">Voltar</span>
                 </button>
             </div>
         </div>
@@ -29,16 +29,22 @@
     </div>
     <div class="block-section">
         <form id='cadastro-form' class="form-horizontal" onsubmit="return false;">
-            <input type="hidden" name="prd_id" id="prd_id" value=0>
+            <input type="hidden" name="cns_reserva" id="cns_reserva" value=0>
             <div class="block">
                 <div class="form-group">
-                    <label class="col-md-2 control-label" for="prd_descricao">Descrição</label>
+                    <label class="col-md-2 control-label" for="cns_produto">Produto</label>
                     <div class="col-md-3">
-                        <input type="text" name="prd_descricao" id="prd_descricao" class="form-control" required autocomplete="nope">
+                        <input type="text" name="cns_produto" id="cns_produto" class="form-control" required autocomplete="nope">
                     </div>
-                    <label class="col-md-2 control-label" for="prd_valor">Valor</label>
+                    <label class="col-md-2 control-label" for="cns_valor">Valor</label>
                     <div class="col-md-3">
-                        <input type="text" name="prd_valor" id="prd_valor" class="form-control" required autocomplete="nope">
+                        <input type="email" name="cns_valor" id="cns_valor" class="form-control" readonly required autocomplete="nope">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="cns_qtde">Qtde</label>
+                    <div class="col-md-3">
+                        <input type="number" name="cns_qtde" id="cns_qtde" class="form-control" required autocomplete="nope">
                     </div>
                 </div>
             </div>
@@ -48,12 +54,13 @@
 <div class="block">
     <div class="block-section">
         <div class="table-responsive">
-            <table id="produto-datatable" class="table table-striped table-bordered table-vcenter" style="width: 100%;">
+            <table id="cliente-datatable" class="table table-striped table-bordered table-vcenter" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th class="text-center">Identificador</th>
-                        <th class="text-center">Descrição</th>
-                        <th class="text-center">Preço</th>
+                        <th class="text-center">Produto</th>
+                        <th class="text-center">Qtde</th>
+                        <th class="text-center">Valor</th>
+                        <th class="text-center">Momento</th>
                     </tr>
                 </thead>
             </table>
@@ -71,5 +78,3 @@
 <script src="<?php echo BASE_URL?>assets/js/pages/jquery.number.min.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/lang/pt/message.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/modulos/gral/Datatable.js"></script>
-<!-- module related script to load -->
-<script src="<?php echo BASE_URL?>assets/js/modulos/produto/cadastro.js"></script>

@@ -25,7 +25,6 @@ $template = array(
 $session_username = $_SESSION["app_erp_pousada"]["user"]["data"]["usuario"] ?? '';
 $session_grp_acesso = $_SESSION["app_erp_pousada"]["user"]["data"]["grupo_acessos"] ?? 3;
 
-/* Primary navigation array (the primary navigation will be created automatically based on this array, up to 3 levels deep) */
 $primary_nav = array(
     array(
         'name'  => 'Painel Principal',
@@ -54,7 +53,7 @@ if ($session_grp_acesso == 1 || $session_grp_acesso == 2)
             ),
             array(
                 'name' => 'Suítes',
-                'url'  => 'Suite'
+                'url'  => 'Suites'
             )
         )
     );
@@ -73,24 +72,6 @@ if ($session_grp_acesso == 1 || $session_grp_acesso == 2)
     }
 
     $primary_nav[] = $cadastros;
-
-    $relatorios = array(
-        'name'  => 'Relatórios',
-        'url'   => '',
-        'icon'  => 'fa fa-print',
-        'sub'   => array(
-            array(
-                'name' => 'Produtos',
-                'url'  => 'RelatorioProdutos'
-            ),
-            array(
-                'name' => 'Suites',
-                'url'  => 'RelatorioSuites'
-            )
-        )
-    );
-
-    $primary_nav[] = $relatorios;
 }
 
 $diaAdia = array(

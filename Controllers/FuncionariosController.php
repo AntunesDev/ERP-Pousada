@@ -319,7 +319,7 @@
         $start = (int) $requestData['start'];
         $length = (int) $requestData['length'];
 
-        $totalData = count($Model->consultarFuncionario());
+        $totalData = count($Model->consultarFuncionarios());
         $lSCadastro = $Model->consultarFuncionarioSearch($search, $order, $dir, $start, $length);
 
         if ($totalData > 0)

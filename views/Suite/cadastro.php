@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-3">
             <div class="header-section text-center">
-                <h1>Produtos</h1>
+                <h1>Suites</h1>
             </div>
         </div>
         <div class="col-sm-9">
@@ -29,16 +29,16 @@
     </div>
     <div class="block-section">
         <form id='cadastro-form' class="form-horizontal" onsubmit="return false;">
-            <input type="hidden" name="prd_id" id="prd_id" value=0>
+            <input type="hidden" name="ste_id" id="ste_id" value=0>
             <div class="block">
                 <div class="form-group">
-                    <label class="col-md-2 control-label" for="prd_descricao">Descrição</label>
+                    <label class="col-md-2 control-label" for="ste_tipo">Descrição</label>
                     <div class="col-md-3">
-                        <input type="text" name="prd_descricao" id="prd_descricao" class="form-control" required autocomplete="nope">
+                        <input type="text" name="ste_tipo" id="ste_tipo" class="form-control" required autocomplete="nope">
                     </div>
-                    <label class="col-md-2 control-label" for="prd_valor">Valor</label>
+                    <label class="col-md-2 control-label" for="ste_valor">Valor</label>
                     <div class="col-md-3">
-                        <input type="text" name="prd_valor" id="prd_valor" class="form-control" required autocomplete="nope">
+                        <input type="text" name="ste_valor" id="ste_valor" class="form-control" required autocomplete="nope">
                     </div>
                 </div>
             </div>
@@ -48,12 +48,12 @@
 <div class="block">
     <div class="block-section">
         <div class="table-responsive">
-            <table id="produto-datatable" class="table table-striped table-bordered table-vcenter" style="width: 100%;">
+            <table id="suite-datatable" class="table table-striped table-bordered table-vcenter" style="width: 100%;">
                 <thead>
                     <tr>
                         <th class="text-center">Identificador</th>
-                        <th class="text-center">Descrição</th>
-                        <th class="text-center">Preço</th>
+                        <th class="text-center">Tipo</th>
+                        <th class="text-center">Valor</th>
                     </tr>
                 </thead>
             </table>
@@ -71,5 +71,3 @@
 <script src="<?php echo BASE_URL?>assets/js/pages/jquery.number.min.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/lang/pt/message.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/modulos/gral/Datatable.js"></script>
-<!-- module related script to load -->
-<script src="<?php echo BASE_URL?>assets/js/modulos/produto/cadastro.js"></script>

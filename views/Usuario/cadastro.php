@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-3">
             <div class="header-section text-center">
-                <h1>Cadastro de Usuários</h1>
+                <h1>Usuários</h1>
             </div>
         </div>
         <div class="col-sm-9">
