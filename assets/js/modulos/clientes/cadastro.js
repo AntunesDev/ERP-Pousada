@@ -169,5 +169,10 @@ $(document).ready(() =>
     })
   })
 
+  $('#print-btn').on('click', () =>
+  {
+    swal("Oops...", "Função ainda em testes.", "error")
+  })
+
 })
   
