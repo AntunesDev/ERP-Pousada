@@ -57,7 +57,7 @@ class ClientesController extends Core\Controller
 
       array_walk_recursive($requestData, function(&$value)
       {
-        $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], utf8_encode($value)));
+        $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], $value));
       });
 
       if (empty($requestData["cli_nome"]))
@@ -155,7 +155,7 @@ class ClientesController extends Core\Controller
 
       array_walk_recursive($requestData, function(&$value)
       {
-        $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], utf8_encode($value)));
+        $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], $value));
       });
 
       if (empty($requestData["cli_id"]))
@@ -248,7 +248,7 @@ class ClientesController extends Core\Controller
       {
         array_walk_recursive($lSCadastro, function(&$value)
         {
-          $value = $this->Helper->removeAccents(str_replace('"', '', utf8_encode($value)));
+          $value = $this->Helper->removeAccents(str_replace('"', '', $value));
         });
       }
 
