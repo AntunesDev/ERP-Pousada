@@ -1,3 +1,4 @@
+<?php if ($_SESSION["app_erp_pousada"]["user"]["data"]["grupo_acessos"] != 3) { ?>
 <!-- First Row -->
 <div class="row">
   <!-- Simple Stats Widgets -->
@@ -101,21 +102,23 @@
   </div>
 </div>
 <!-- END Second Row -->
-
+<?php } ?>
 <!-- obligatory scripts to load -->
 <?php include BASE_PATH . 'assets/inc/page_footer.php'; ?>
 <?php include BASE_PATH . 'assets/inc/template_scripts.php'; ?>
 <script src="<?php echo BASE_URL ?>assets/js/modulos/gral/checkSession.js"></script>
 <!-- on demand scripts to load -->
+<script src="<?php echo BASE_URL ?>assets/js/pages/sweetalert.min.js"></script>
+
+<?php if ($_SESSION["app_erp_pousada"]["user"]["data"]["grupo_acessos"] != 3) { ?>
+<script type="text/javascript">
+  var BASE_URL = '<?php echo BASE_URL; ?>';
+</script>
 <script src="<?php echo BASE_URL ?>assets/js/pages/readyDashboard.js"></script>
 <script>
   $(function() {
     ReadyDashboard.init();
   });
 </script>
-<script src="<?php echo BASE_URL ?>assets/js/pages/sweetalert.min.js"></script>
-<!-- module related script to load -->
-<script type="text/javascript">
-  var BASE_URL = '<?php echo BASE_URL; ?>';
-</script>
 <script src="<?php echo BASE_URL ?>assets/js/modulos/home/home.js"></script>
+<?php } ?>
