@@ -64,17 +64,17 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="fnc_endereco">Endereço</label>
                     <div class="col-md-3">
-                        <input type="tel" name="fnc_endereco" id="fnc_endereco" class="form-control" required autocomplete="nope">
+                        <input type="text" name="fnc_endereco" id="fnc_endereco" class="form-control" required autocomplete="nope">
                     </div>
                     <label class="col-md-2 control-label" for="fnc_cidade">Cidade</label>
                     <div class="col-md-3">
-                        <input type="tel" name="fnc_cidade" id="fnc_cidade" class="form-control" required autocomplete="nope">
+                        <input type="text" name="fnc_cidade" id="fnc_cidade" class="form-control" required autocomplete="nope">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="fnc_funcao">Função</label>
                     <div class="col-md-3">
-                        <input type="tel" name="fnc_funcao" id="fnc_funcao" class="form-control" required autocomplete="nope">
+                        <input type="text" name="fnc_funcao" id="fnc_funcao" class="form-control" required autocomplete="nope">
                     </div>
                     <label class="col-md-2 control-label" for="fnc_salario">Salário</label>
                     <div class="col-md-3">
