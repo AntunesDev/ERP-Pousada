@@ -257,6 +257,7 @@
         }
         else
         {
+          $Entity->fnc_id = $requestData["fnc_id"];
           $Entity->fnc_nome = $requestData["fnc_nome"];
           $Entity->fnc_rg = $requestData["fnc_rg"];
           $Entity->fnc_cpf = $requestData["fnc_cpf"];

@@ -82,9 +82,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label" for="fnc_usario">Usuário</label>
+                    <label class="col-md-3 control-label" for="fnc_usuario">Usuário</label>
                     <div class="col-md-4">
-                        <select type="text" id="fnc_usario" name="fnc_usario" class="form-control">
+                        <select type="text" id="fnc_usuario" name="fnc_usuario" class="form-control">
                             <option value="">Selecionar</option>
                         </select>
                     </div>

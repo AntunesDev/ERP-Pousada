@@ -1,11 +1,11 @@
 axios.post('Usuarios/listarUsuarios')
 .then((res) => 
 {
-  if (res.data.success)
+  if (res.data.result.length > 0)
   {
     res.data.result.forEach(element =>
     {
-      $('#fnc_usario').append($('<option>', {value:element.usr_id, text:element.usr_name}))
+      $('#fnc_usuario').append($('<option>', {value:element.usr_id, text:element.usr_name}))
     })
   }
 })
@@ -75,6 +75,7 @@ $(document).ready(() =>
             $(`#${key}`).val(value)
             $(`#cadastro-form`).change()
           })
+          $(`#fnc_usuario option[value=${res.data.result.fnc_usuario}]`).prop('selected', true)
         }
       })
       $(`#delete-btn`).prop("disabled", false)

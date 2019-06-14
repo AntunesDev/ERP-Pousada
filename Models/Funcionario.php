@@ -134,7 +134,7 @@ class Funcionario extends Core\Model
 			$sql->bindParam(":fnc_id", $FuncionarioE->fnc_id);
 			$sql->execute();
 
-			if ($sql->rowCount() <= 0)
+			if ($sql->rowCount() < 0)
 			{
 			  $msg = 'Erro ao atualizar dados.';
 			  goto end;
