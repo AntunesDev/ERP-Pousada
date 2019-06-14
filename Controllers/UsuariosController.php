@@ -221,13 +221,13 @@ class UsuariosController extends Core\Controller
 
       $totalData = count($Model->consultarUsuarios());
       $lSCadastro = $Model->consultarUsuariosSearch($search, $order, $dir, $start, $length);
-
+      
       if ($totalData > 0)
       {
-          array_walk_recursive($lSCadastro, function(&$value)
-          {
-              $value = $this->Helper->removeAccents(str_replace('"', '', utf8_encode($value)));
-          });
+        array_walk_recursive($lSCadastro, function(&$value)
+        {
+          $value = $this->Helper->removeAccents(str_replace('"', '', $value));
+        });
       }
 
       if (empty($search))
@@ -261,6 +261,35 @@ class UsuariosController extends Core\Controller
       );
 
       echo json_encode($json_data);
+    }
+    catch (Exception $exception)
+    {
+      throw new Exception($exception, 500);
+    }
+  }
+
+  public function listarUsuarios()
+  {
+    try
+    {
+      $Model = new Models\Usuario();
+
+      $totalData = $Model->consultarUsuarios();
+      
+      if ($totalData > 0)
+      {
+        array_walk_recursive($totalData, function(&$value)
+        {
+          $value = $this->Helper->removeAccents(str_replace('"', '', $value));
+        });
+        $jsondata['result'] = $totalData;
+      }
+      else
+      {
+        $jsondata['result'] = [];
+      }
+
+      echo json_encode($jsondata);
     }
     catch (Exception $exception)
     {

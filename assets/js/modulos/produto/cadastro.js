@@ -17,6 +17,14 @@ $(document).ready(() =>
   produtoDataTable = new DataTableClass('#produto-datatable', 'Produtos/consultarProdutos')
   produtoDataTable.loadTable(columns)
 
+  $(document).on('keypress', (e) =>
+  {
+    if (e.keyCode == 13)
+    {
+      $('#add-btn').click()
+    }
+  })
+
   $(`#delete-btn`).prop("disabled", true)
 
   $(`#cadastro-form`).on('reset', () => 

@@ -17,20 +17,47 @@ class Funcionario extends Core\Model
 		$this->db->beginTransaction();
 		try
 		{
-			$sql = $this->db->prepare("INSERT INTO produtos
+			$sql = $this->db->prepare("INSERT INTO funcionarios
 			(
-				prd_descricao,
-				prd_valor
+				fnc_nome,
+				fnc_rg,
+				fnc_cpf,
+				fnc_telefone,
+				fnc_email,
+				fnc_endereco,
+				fnc_cep,
+				fnc_cidade,
+				fnc_funcao,
+				fnc_salario,
+				fnc_usuario
 			)
 			VALUES
 			(
-				:prd_descricao,
-				:prd_valor
+				:fnc_nome,
+				:fnc_rg,
+				:fnc_cpf,
+				:fnc_telefone,
+				:fnc_email,
+				:fnc_endereco,
+				:fnc_cep,
+				:fnc_cidade,
+				:fnc_funcao,
+				:fnc_salario,
+				:fnc_usuario
 			)
 			", array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 
-			$sql->bindParam(":prd_descricao", $FuncionarioE->prd_descricao);
-			$sql->bindParam(":prd_valor", $FuncionarioE->prd_valor);
+			$sql->bindParam(":fnc_nome", $FuncionarioE->fnc_nome);
+			$sql->bindParam(":fnc_rg", $FuncionarioE->fnc_rg);
+			$sql->bindParam(":fnc_cpf", $FuncionarioE->fnc_cpf);
+			$sql->bindParam(":fnc_telefone", $FuncionarioE->fnc_telefone);
+			$sql->bindParam(":fnc_email", $FuncionarioE->fnc_email);
+			$sql->bindParam(":fnc_endereco", $FuncionarioE->fnc_endereco);
+			$sql->bindParam(":fnc_cep", $FuncionarioE->fnc_cep);
+			$sql->bindParam(":fnc_cidade", $FuncionarioE->fnc_cidade);
+			$sql->bindParam(":fnc_funcao", $FuncionarioE->fnc_funcao);
+			$sql->bindParam(":fnc_salario", $FuncionarioE->fnc_salario);
+			$sql->bindParam(":fnc_usuario", $FuncionarioE->fnc_usuario);
 			$sql->execute();
 
 			if ($sql->rowCount() <= 0)
@@ -61,8 +88,8 @@ class Funcionario extends Core\Model
 	{
 		try
 		{
-			$sql = $this->db->prepare("SELECT * FROM funcionarios WHERE prd_id = :prd_id;");
-			$sql->bindParam(":prd_id", $FuncionarioE->prd_id);
+			$sql = $this->db->prepare("SELECT * FROM funcionarios WHERE fnc_id = :fnc_id;");
+			$sql->bindParam(":fnc_id", $FuncionarioE->fnc_id);
 			$sql->execute();
 			return $sql->fetch(PDO::FETCH_OBJ);
 		}
@@ -77,16 +104,34 @@ class Funcionario extends Core\Model
 		$this->db->beginTransaction();
 		try
 		{
-			$sql = $this->db->prepare("UPDATE produtos SET
-				prd_descricao = :prd_descricao,
-				prd_valor = :prd_valor
+			$sql = $this->db->prepare("UPDATE funcionarios SET
+				fnc_nome = :fnc_nome,
+				fnc_rg = :fnc_rg,
+				fnc_cpf = :fnc_cpf,
+				fnc_telefone = :fnc_telefone,
+				fnc_email = :fnc_email,
+				fnc_endereco = :fnc_endereco,
+				fnc_cep = :fnc_cep,
+				fnc_cidade = :fnc_cidade,
+				fnc_funcao = :fnc_funcao,
+				fnc_salario = :fnc_salario,
+				fnc_usuario = :fnc_usuario
 			WHERE
-				prd_id = :prd_id
+				fnc_id = :fnc_id
 			", array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 
-			$sql->bindParam(":prd_descricao", $FuncionarioE->prd_descricao);
-			$sql->bindParam(":prd_valor", $FuncionarioE->prd_valor);
-			$sql->bindParam(":prd_id", $FuncionarioE->prd_id);
+			$sql->bindParam(":fnc_nome", $FuncionarioE->fnc_nome);
+			$sql->bindParam(":fnc_rg", $FuncionarioE->fnc_rg);
+			$sql->bindParam(":fnc_cpf", $FuncionarioE->fnc_cpf);
+			$sql->bindParam(":fnc_telefone", $FuncionarioE->fnc_telefone);
+			$sql->bindParam(":fnc_email", $FuncionarioE->fnc_email);
+			$sql->bindParam(":fnc_endereco", $FuncionarioE->fnc_endereco);
+			$sql->bindParam(":fnc_cep", $FuncionarioE->fnc_cep);
+			$sql->bindParam(":fnc_cidade", $FuncionarioE->fnc_cidade);
+			$sql->bindParam(":fnc_funcao", $FuncionarioE->fnc_funcao);
+			$sql->bindParam(":fnc_salario", $FuncionarioE->fnc_salario);
+			$sql->bindParam(":fnc_usuario", $FuncionarioE->fnc_usuario);
+			$sql->bindParam(":fnc_id", $FuncionarioE->fnc_id);
 			$sql->execute();
 
 			if ($sql->rowCount() <= 0)
@@ -117,10 +162,10 @@ class Funcionario extends Core\Model
 	{
 		try
 		{
-			$sql = $this->db->prepare("DELETE FROM funcionarios WHERE prd_id = :prd_id;",
+			$sql = $this->db->prepare("DELETE FROM funcionarios WHERE fnc_id = :fnc_id;",
 				array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 
-			$sql->bindParam(":prd_id", $FuncionarioE->prd_id);
+			$sql->bindParam(":fnc_id", $FuncionarioE->fnc_id);
 			$sql->execute();
 
 			return $sql->rowCount() > 0;
@@ -151,12 +196,21 @@ class Funcionario extends Core\Model
 			die();
 
 		$strSQL = "SELECT
-			prd_id,
-			prd_descricao,
-			prd_valor
+			fnc_id,
+			fnc_nome,
+			fnc_rg,
+			fnc_cpf,
+			fnc_telefone,
+			fnc_email,
+			fnc_endereco,
+			fnc_cep,
+			fnc_cidade,
+			fnc_funcao,
+			fnc_salario,
+			fnc_usuario
 		FROM funcionarios
 		WHERE
-			prd_descricao LIKE :searchText
+			fnc_nome LIKE :searchText
 		ORDER BY ".$orderColumn." ".$orderDir."
 		LIMIT :start, :rows;";
 		
@@ -174,20 +228,6 @@ class Funcionario extends Core\Model
 
 		$row = $sql->fetchAll(PDO::FETCH_ASSOC);
 		return $row;
-	}
-
-	public function gerarRelProd()
-	{
-		try
-		{
-			$sql = $this->db->prepare("SELECT * FROM funcionarios;");
-			$sql->execute();
-			return $sql->fetchAll(PDO::FETCH_ASSOC);
-		}
-		catch(Exception $exception)
-		{
-			throw new Exception($exception, 500);
-		}
 	}
 
 }

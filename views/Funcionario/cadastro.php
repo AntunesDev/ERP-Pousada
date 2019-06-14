@@ -81,6 +81,14 @@
                         <input type="tel" name="fnc_salario" id="fnc_salario" class="form-control" required autocomplete="nope">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="fnc_usario">Usuário</label>
+                    <div class="col-md-4">
+                        <select type="text" id="fnc_usario" name="fnc_usario" class="form-control">
+                            <option value="">Selecionar</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -119,3 +127,5 @@
 <script src="<?php echo BASE_URL?>assets/js/pages/jquery.number.min.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/lang/pt/message.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/modulos/gral/Datatable.js"></script>
+<!-- module related script to load -->
+<script src="<?php echo BASE_URL?>assets/js/modulos/funcionarios/cadastro.js"></script>

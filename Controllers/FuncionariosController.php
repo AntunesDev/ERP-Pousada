@@ -47,7 +47,7 @@
       }
     }
 
-    public function cadastrarFuncionario()
+    public function incluirFuncionario()
     {
       try
       {
@@ -66,17 +66,17 @@
           $jsondata["success"] = false;
           $jsondata["message"] = "O nome do funcionário não pode estar em branco.";
         }
-        else if (is_numeric($requestData["fnc_rg"]))
+        else if (!is_numeric($requestData["fnc_rg"]))
         {
           $jsondata["success"] = false;
           $jsondata["message"] = "O RG não pode estar em branco.";
         }
-        else if (is_numeric($requestData["fnc_cpf"]))
+        else if (!is_numeric($requestData["fnc_cpf"]))
         {
           $jsondata["success"] = false;
           $jsondata["message"] = "O CPF não pode estar em branco.";
         }
-        else if (is_numeric($requestData["fnc_telefone"]))
+        else if (!is_numeric($requestData["fnc_telefone"]))
         {
           $jsondata["success"] = false;
           $jsondata["message"] = "O telefone não pode estar em branco.";
@@ -205,17 +205,17 @@
           $jsondata["success"] = false;
           $jsondata["message"] = "O nome do funcionário não pode estar em branco.";
         }
-        else if (is_numeric($requestData["fnc_rg"]))
+        else if (!is_numeric($requestData["fnc_rg"]))
         {
           $jsondata["success"] = false;
           $jsondata["message"] = "O RG não pode estar em branco.";
         }
-        else if (is_numeric($requestData["fnc_cpf"]))
+        else if (!is_numeric($requestData["fnc_cpf"]))
         {
           $jsondata["success"] = false;
           $jsondata["message"] = "O CPF não pode estar em branco.";
         }
-        else if (is_numeric($requestData["fnc_telefone"]))
+        else if (!is_numeric($requestData["fnc_telefone"]))
         {
           $jsondata["success"] = false;
           $jsondata["message"] = "O telefone não pode estar em branco.";

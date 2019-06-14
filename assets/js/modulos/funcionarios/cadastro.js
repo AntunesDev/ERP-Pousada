@@ -1,12 +1,11 @@
-axios.post('GruposAcessos/consultarGrupos')
+axios.post('Usuarios/listarUsuarios')
 .then((res) => 
 {
   if (res.data.success)
   {
-    $('#usr_grupo').append($('<option>', {value:0, text:'Selecione um grupo'}))
     res.data.result.forEach(element =>
     {
-      $('#usr_grupo').append($('<option>', {value:element.grp_id, text:element.grp_nome}))
+      $('#fnc_usario').append($('<option>', {value:element.usr_id, text:element.usr_name}))
     })
   }
 })
@@ -17,21 +16,17 @@ $(document).ready(() =>
   {
     "columns":
     [
-      {"data": "usr_id"},
-      {"data": "usr_name"},
-      {"data": "usr_grupo"},
-      {
-        data: null, render: (data, type, row) => {
-          if (data.usr_nome.length == 0)
-          {
-            return `<center><i class="fa fa-ban text-danger"></i></center>`
-          }
-          else
-          {
-            return `<center>${data.usr_nome}</center>`
-          }
-        }
-      }
+      {"data": "fnc_id"},
+      {"data": "fnc_nome"},
+      {"data": "fnc_rg"},
+      {"data": "fnc_cpf"},
+      {"data": "fnc_telefone"},
+      {"data": "fnc_email"},
+      {"data": "fnc_endereco"},
+      {"data": "fnc_cep"},
+      {"data": "fnc_cidade"},
+      {"data": "fnc_funcao"},
+      {"data": "fnc_salario"}
     ],
     "aoColumnDefs":
     [
@@ -39,8 +34,8 @@ $(document).ready(() =>
     ]
   }
 
-  usuarioDataTable = new DataTableClass('#usuario-datatable', 'Usuarios/consultarUsuarios')
-  usuarioDataTable.loadTable(columns)
+  funcionarioDataTable = new DataTableClass('#funcionario-datatable', 'Funcionarios/consultarFuncionarios')
+  funcionarioDataTable.loadTable(columns)
 
   $(document).on('keypress', (e) =>
   {
@@ -62,16 +57,16 @@ $(document).ready(() =>
   {
     $(`#cadastro-form`).trigger("reset")
     $(`#delete-btn`).prop("disabled", true)
-    $('#usr_id').val(0)
+    $('#fnc_id').val(0)
   })
 
-  $(`#usr_id`).on("change", () => 
+  $(`#fnc_id`).on("change", () => 
   {
-    if ($(`#usr_id`).val().length > 0)
+    if ($(`#fnc_id`).val().length > 0)
     {
       let data = new FormData()
-      data.append('usr_id', $(`#usr_id`).val())
-      axios.post(`Usuarios/buscarUsuario`, data)
+      data.append('fnc_id', $(`#fnc_id`).val())
+      axios.post(`Funcionarios/consultarFuncionario`, data)
       .then((res) => {
         if (res.data.success == true)
         {
@@ -90,9 +85,9 @@ $(document).ready(() =>
     }
   })
 
-  $(`#usuario-datatable`).on('click', 'tr', (event) => {
+  $(`#funcionario-datatable`).on('click', 'tr', (event) => {
     let id = $(event.currentTarget).find('td:eq(0)').text()
-    $(`#usr_id`)
+    $(`#fnc_id`)
       .val(id)
       .trigger("change")
   })
@@ -102,66 +97,59 @@ $(document).ready(() =>
       $('<input type="submit">').hide().appendTo($(`#cadastro-form`)).click().remove();
     else
     {
-      if ($('#usr_grupo').val() == 0)
-      {
-        swal("Oops...", "Selecione um grupo de acessos.", "error")
-      }
-      else
-      {
         swal({
-          title: "Tem certeza?",
-          text: "Salvar as informações especificadas?",
-          icon: "warning",
-          buttons: true,
-          dangerMode: true
+            title: "Tem certeza?",
+            text: "Salvar as informações especificadas?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
         })
         .then((sure) => {
-          if (sure) {
+            if (sure) {
             let data = new FormData($(`#cadastro-form`)[0])
-            if (!data.has('usr_id') && $('#usr_id').val() != 0)
-              data.append('usr_id', $(`#usr_id`).val())
+            if (!data.has('fnc_id') && $('#fnc_id').val() != 0)
+                data.append('fnc_id', $(`#fnc_id`).val())
 
-            if ($('#usr_id').val() == 0)
+            if ($('#fnc_id').val() == 0)
             {
-              axios.post(`Usuarios/incluirUsuario`, data)
-              .then((res) => {
+                axios.post(`Funcionarios/incluirFuncionario`, data)
+                .then((res) => {
                 if (res.data.success == true)
                 {
-                  swal("Sucesso!", res.data.message, "success")
-                  .then(() => {
-                    $(`#usuario-datatable`).DataTable().ajax.reload()
+                    swal("Sucesso!", res.data.message, "success")
+                    .then(() => {
+                    $(`#funcionario-datatable`).DataTable().ajax.reload()
                     $(`#limpar-btn`).click()
-                  })
+                    })
                 }
                 else
                 {
-                  swal("Oops...", res.data.message, "error")
+                    swal("Oops...", res.data.message, "error")
                 }
-              })
+                })
             }
             else
             {
-              axios.post(`Usuarios/alterarUsuario`, data)
-              .then((res) => {
+                axios.post(`Funcionarios/alterarFuncionario`, data)
+                .then((res) => {
                 if (res.data.success == true)
                 {
-                  swal("Sucesso!", res.data.message, "success")
-                  .then(() => {
-                    $(`#usuario-datatable`).DataTable().ajax.reload()
+                    swal("Sucesso!", res.data.message, "success")
+                    .then(() => {
+                    $(`#funcionario-datatable`).DataTable().ajax.reload()
                     $(`#limpar-btn`).click()
-                  })
+                    })
                 }
                 else
                 {
-                  swal("Oops...", res.data.message, "error")
+                    swal("Oops...", res.data.message, "error")
                 }
-              })
+                })
             }
-          } else {
+            } else {
             swal.close()
-          }
+            }
         })
-      }
     }
   })
 
@@ -176,14 +164,14 @@ $(document).ready(() =>
     .then((sure) => {
       if (sure) {
         let data = new FormData()
-        data.append('usr_id', $(`#usr_id`).val())
-        axios.post(`Usuarios/excluirUsuario`, data)
+        data.append('fnc_id', $(`#fnc_id`).val())
+        axios.post(`Funcionarios/excluirFuncionario`, data)
         .then((res) => {
           if (res.data.success == true)
           {
             swal("Sucesso!", res.data.message, "success")
             .then(() => {
-              $(`#usuario-datatable`).DataTable().ajax.reload()
+              $(`#funcionario-datatable`).DataTable().ajax.reload()
               $(`#limpar-btn`).click()
             })
           }

@@ -71,3 +71,5 @@
 <script src="<?php echo BASE_URL?>assets/js/pages/jquery.number.min.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/lang/pt/message.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/modulos/gral/Datatable.js"></script>
+<!-- module related script to load -->
+<script src="<?php echo BASE_URL?>assets/js/modulos/suites/cadastro.js"></script>

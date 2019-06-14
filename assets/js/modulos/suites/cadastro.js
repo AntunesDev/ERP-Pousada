@@ -1,37 +1,12 @@
-axios.post('GruposAcessos/consultarGrupos')
-.then((res) => 
-{
-  if (res.data.success)
-  {
-    $('#usr_grupo').append($('<option>', {value:0, text:'Selecione um grupo'}))
-    res.data.result.forEach(element =>
-    {
-      $('#usr_grupo').append($('<option>', {value:element.grp_id, text:element.grp_nome}))
-    })
-  }
-})
-
 $(document).ready(() => 
 {
   let columns =
   {
     "columns":
     [
-      {"data": "usr_id"},
-      {"data": "usr_name"},
-      {"data": "usr_grupo"},
-      {
-        data: null, render: (data, type, row) => {
-          if (data.usr_nome.length == 0)
-          {
-            return `<center><i class="fa fa-ban text-danger"></i></center>`
-          }
-          else
-          {
-            return `<center>${data.usr_nome}</center>`
-          }
-        }
-      }
+      {"data": "ste_id"},
+      {"data": "ste_tipo"},
+      {"data": "ste_valor"}
     ],
     "aoColumnDefs":
     [
@@ -39,8 +14,8 @@ $(document).ready(() =>
     ]
   }
 
-  usuarioDataTable = new DataTableClass('#usuario-datatable', 'Usuarios/consultarUsuarios')
-  usuarioDataTable.loadTable(columns)
+  suiteDataTable = new DataTableClass('#suite-datatable', 'Suites/consultarSuites')
+  suiteDataTable.loadTable(columns)
 
   $(document).on('keypress', (e) =>
   {
@@ -62,16 +37,16 @@ $(document).ready(() =>
   {
     $(`#cadastro-form`).trigger("reset")
     $(`#delete-btn`).prop("disabled", true)
-    $('#usr_id').val(0)
+    $('#ste_id').val(0)
   })
 
-  $(`#usr_id`).on("change", () => 
+  $(`#ste_id`).on("change", () => 
   {
-    if ($(`#usr_id`).val().length > 0)
+    if ($(`#ste_id`).val().length > 0)
     {
       let data = new FormData()
-      data.append('usr_id', $(`#usr_id`).val())
-      axios.post(`Usuarios/buscarUsuario`, data)
+      data.append('ste_id', $(`#ste_id`).val())
+      axios.post(`Suites/buscarSuite`, data)
       .then((res) => {
         if (res.data.success == true)
         {
@@ -90,9 +65,9 @@ $(document).ready(() =>
     }
   })
 
-  $(`#usuario-datatable`).on('click', 'tr', (event) => {
+  $(`#suite-datatable`).on('click', 'tr', (event) => {
     let id = $(event.currentTarget).find('td:eq(0)').text()
-    $(`#usr_id`)
+    $(`#ste_id`)
       .val(id)
       .trigger("change")
   })
@@ -102,66 +77,59 @@ $(document).ready(() =>
       $('<input type="submit">').hide().appendTo($(`#cadastro-form`)).click().remove();
     else
     {
-      if ($('#usr_grupo').val() == 0)
-      {
-        swal("Oops...", "Selecione um grupo de acessos.", "error")
-      }
-      else
-      {
         swal({
-          title: "Tem certeza?",
-          text: "Salvar as informações especificadas?",
-          icon: "warning",
-          buttons: true,
-          dangerMode: true
+            title: "Tem certeza?",
+            text: "Salvar as informações especificadas?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
         })
         .then((sure) => {
-          if (sure) {
+            if (sure) {
             let data = new FormData($(`#cadastro-form`)[0])
-            if (!data.has('usr_id') && $('#usr_id').val() != 0)
-              data.append('usr_id', $(`#usr_id`).val())
+            if (!data.has('ste_id') && $('#ste_id').val() != 0)
+              data.append('ste_id', $(`#ste_id`).val())
 
-            if ($('#usr_id').val() == 0)
+            if ($('#ste_id').val() == 0)
             {
-              axios.post(`Usuarios/incluirUsuario`, data)
-              .then((res) => {
+                axios.post(`Suites/incluirSuite`, data)
+                .then((res) => {
                 if (res.data.success == true)
                 {
-                  swal("Sucesso!", res.data.message, "success")
-                  .then(() => {
-                    $(`#usuario-datatable`).DataTable().ajax.reload()
+                    swal("Sucesso!", res.data.message, "success")
+                    .then(() => {
+                    $(`#suite-datatable`).DataTable().ajax.reload()
                     $(`#limpar-btn`).click()
-                  })
+                    })
                 }
                 else
                 {
-                  swal("Oops...", res.data.message, "error")
+                    swal("Oops...", res.data.message, "error")
                 }
-              })
+                })
             }
             else
             {
-              axios.post(`Usuarios/alterarUsuario`, data)
-              .then((res) => {
+                axios.post(`Suites/alterarSuite`, data)
+                .then((res) => {
                 if (res.data.success == true)
                 {
-                  swal("Sucesso!", res.data.message, "success")
-                  .then(() => {
-                    $(`#usuario-datatable`).DataTable().ajax.reload()
+                    swal("Sucesso!", res.data.message, "success")
+                    .then(() => {
+                    $(`#suite-datatable`).DataTable().ajax.reload()
                     $(`#limpar-btn`).click()
-                  })
+                    })
                 }
                 else
                 {
-                  swal("Oops...", res.data.message, "error")
+                    swal("Oops...", res.data.message, "error")
                 }
-              })
+                })
             }
-          } else {
+            } else {
             swal.close()
-          }
+            }
         })
-      }
     }
   })
 
@@ -176,14 +144,14 @@ $(document).ready(() =>
     .then((sure) => {
       if (sure) {
         let data = new FormData()
-        data.append('usr_id', $(`#usr_id`).val())
-        axios.post(`Usuarios/excluirUsuario`, data)
+        data.append('ste_id', $(`#ste_id`).val())
+        axios.post(`Suites/excluirSuite`, data)
         .then((res) => {
           if (res.data.success == true)
           {
             swal("Sucesso!", res.data.message, "success")
             .then(() => {
-              $(`#usuario-datatable`).DataTable().ajax.reload()
+              $(`#suite-datatable`).DataTable().ajax.reload()
               $(`#limpar-btn`).click()
             })
           }
