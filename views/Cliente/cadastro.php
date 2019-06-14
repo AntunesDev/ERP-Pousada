@@ -90,3 +90,4 @@
 <script src="<?php echo BASE_URL?>assets/js/pages/jquery.number.min.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/lang/pt/message.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/modulos/gral/Datatable.js"></script>
+<script src="<?php echo BASE_URL?>assets/js/modulos/clientes/cadastro.js"></script>
