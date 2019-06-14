@@ -54,17 +54,16 @@ if ($session_grp_acesso == 1 || $session_grp_acesso == 2)
             array(
                 'name' => 'Suítes',
                 'url'  => 'Suites'
+            ),
+            array(
+                'name' => 'Funcionários',
+                'url'  => 'Funcionarios'
             )
         )
     );
 
     if ($session_grp_acesso == 1)
     {
-        $cadastros["sub"][] = array(
-            'name' => 'Funcionários',
-            'url'  => 'Funcionarios'
-        );
-
         $cadastros["sub"][] = array(
             'name' => 'Usuários',
             'url'  => 'Usuarios'
