@@ -327,7 +327,7 @@
         {
           array_walk_recursive($lSCadastro, function(&$value)
           {
-            $value = $this->Helper->removeAccents(str_replace('"', '', utf8_encode($value)));
+            $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], $value));
           });
         }
 
