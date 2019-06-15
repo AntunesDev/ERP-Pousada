@@ -36,6 +36,10 @@
         }
         else
         {
+          array_walk_recursive($result, function(&$value)
+          {
+            $value = $this->Helper->removeAccents(str_replace('"', '', $value));
+          });
           $json_data = ["success" => true, "result" => $result];
         }
 
@@ -58,7 +62,7 @@
 
         array_walk_recursive($requestData, function(&$value)
         {
-          $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], utf8_encode($value)));
+          $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], $value));
         });
 
         if (empty($requestData["fnc_nome"]))
@@ -192,7 +196,7 @@
 
         array_walk_recursive($requestData, function(&$value)
         {
-          $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], utf8_encode($value)));
+          $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], $value));
         });
 
         if (empty($requestData["fnc_id"]))

@@ -35,6 +35,11 @@ class SuitesController extends Core\Controller
       }
       else
       {
+        array_walk_recursive($result, function(&$value)
+        {
+          $value = $this->Helper->removeAccents(str_replace('"', '', $value));
+        });
+
         $json_data = ["success" => true, "result" => $result];
       }
 
@@ -218,7 +223,7 @@ class SuitesController extends Core\Controller
       {
         array_walk_recursive($lSCadastro, function(&$value)
         {
-            $value = $this->Helper->removeAccents(str_replace('"', '', $value));
+          $value = $this->Helper->removeAccents(str_replace('"', '', $value));
         });
       }
 

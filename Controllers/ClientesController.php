@@ -35,6 +35,11 @@ class ClientesController extends Core\Controller
       }
       else
       {
+        array_walk_recursive($result, function(&$value)
+        {
+          $value = $this->Helper->removeAccents(str_replace('"', '', $value));
+        });
+        
         $json_data = ["success" => true, "result" => $result];
       }
 
