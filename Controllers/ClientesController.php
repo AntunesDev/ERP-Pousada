@@ -295,4 +295,33 @@ class ClientesController extends Core\Controller
     }
   }
 
+  public function listarClientes()
+  {
+    try
+    {
+      $Model = new Models\Cliente();
+
+      $totalData = $Model->consultarClientes();
+      
+      if ($totalData > 0)
+      {
+        array_walk_recursive($totalData, function(&$value)
+        {
+          $value = $this->Helper->removeAccents(str_replace('"', '', $value));
+        });
+        $jsondata['result'] = $totalData;
+      }
+      else
+      {
+        $jsondata['result'] = [];
+      }
+
+      echo json_encode($jsondata);
+    }
+    catch (Exception $exception)
+    {
+      throw new Exception($exception, 500);
+    }
+  }
+
 }

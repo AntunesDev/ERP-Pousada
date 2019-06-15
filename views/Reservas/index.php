@@ -38,29 +38,27 @@
             <input type="hidden" name="rsv_id" id="rsv_id" value=0>
             <div class="block">
                 <div class="form-group">
-                    <label class="col-md-2 control-label" for="rsv_data_entrada">Data de Entrada</label>
-                    <div class="col-md-3">
-                        <input type="text" name="rsv_data_entrada" id="rsv_data_entrada" class="form-control" required autocomplete="nope">
-                    </div>
-                    <label class="col-md-2 control-label" for="rsv_data_saida">Data de Saída</label>
-                    <div class="col-md-3">
-                        <input type="email" name="rsv_data_saida" id="rsv_data_saida" class="form-control" required autocomplete="nope">
+                    <label class="col-md-2 col-md-offset-2 control-label" for="rsv_datas">Período</label>
+                    <div class="col-md-6">
+                        <div class="input-group input-daterange" data-date-format="dd/mm/yyyy">
+                            <input type="text" id="rsv_data_entrada" name="rsv_data_entrada" class="form-control" placeholder="De">
+                            <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
+                            <input type="text" id="rsv_data_saida" name="rsv_data_saida" class="form-control" placeholder="Até">
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2 control-label" for="rsv_status">Estado</label>
-                    <div class="col-md-3">
-                        <input type="text" name="rsv_status" id="rsv_status" class="form-control" required autocomplete="nope">
-                    </div>
                     <label class="col-md-2 control-label" for="rsv_cliente">Cliente</label>
                     <div class="col-md-3">
-                        <input type="text" name="rsv_cliente" id="rsv_cliente" class="form-control" required autocomplete="nope">
+                        <select name="rsv_cliente" id="rsv_cliente" class="form-control" required autocomplete="nope">
+                            <option value="">Selecione um cliente...</option>
+                        </select>
                     </div>
-                </div>
-                <div class="form-group">
                     <label class="col-md-2 control-label" for="rsv_suite">Suite</label>
                     <div class="col-md-3">
-                        <input type="text" name="rsv_suite" id="rsv_suite" class="form-control" required autocomplete="nope">
+                        <select name="rsv_suite" id="rsv_suite" class="form-control" required readonly autocomplete="nope">
+                            <option value=0>Selecione uma suíte...</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -70,7 +68,7 @@
 <div class="block">
     <div class="block-section">
         <div class="table-responsive">
-            <table id="cliente-datatable" class="table table-striped table-bordered table-vcenter" style="width: 100%;">
+            <table id="reservas-datatable" class="table table-striped table-bordered table-vcenter" style="width: 100%;">
                 <thead>
                     <tr>
                         <th class="text-center">Identificador</th>
@@ -98,3 +96,5 @@
 <script src="<?php echo BASE_URL?>assets/js/pages/jquery.number.min.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/lang/pt/message.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/modulos/gral/Datatable.js"></script>
+<script src="<?php echo BASE_URL?>assets/js/modulos/reservas/index.js"></script>
+

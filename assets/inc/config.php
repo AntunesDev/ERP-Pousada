@@ -81,10 +81,6 @@ $diaAdia = array(
         array(
             'name' => 'Reservas',
             'url'  => 'Reservas'
-        ),
-        array(
-            'name' => 'Consumo',
-            'url'  => 'Consumo'
         )
     )
 );

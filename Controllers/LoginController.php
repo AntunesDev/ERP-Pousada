@@ -48,7 +48,8 @@ class LoginController extends Core\Controller
         ["user" =>
           ["data" => 
             [
-              "usuario" => $usuario->usr_name,
+              "id"        => $usuario->usr_id,
+              "usuario"       => $usuario->usr_name,
               "grupo_acessos" => $usuario->usr_grupo
             ]
           ]
