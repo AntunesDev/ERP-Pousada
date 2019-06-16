@@ -341,7 +341,7 @@ class Reserva extends Core\Model
 		LEFT JOIN suites_status ON sst_id = rsv_status
 		LEFT JOIN clientes ON cli_id = rsv_cliente
 		LEFT JOIN suites ON ste_id = rsv_suite
-		LEFT JOIN funcionarios ON fnc_id = rsv_funcionario
+		LEFT JOIN funcionarios ON fnc_usuario = rsv_funcionario
 		WHERE
 			(rsv_suite LIKE :searchText
 			OR fnc_nome LIKE :searchText
