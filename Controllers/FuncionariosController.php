@@ -73,17 +73,17 @@
         else if (!is_numeric($requestData["fnc_rg"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O RG não pode estar em branco.";
+          $jsondata["message"] = "O RG inserido é inválido.";
         }
         else if (!is_numeric($requestData["fnc_cpf"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O CPF não pode estar em branco.";
+          $jsondata["message"] = "O CPF inserido é inválido.";
         }
         else if (!is_numeric($requestData["fnc_telefone"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O telefone não pode estar em branco.";
+          $jsondata["message"] = "O telefone inserido é inválido.";
         }
         else if (empty($requestData["fnc_email"]))
         {
@@ -134,16 +134,26 @@
           $Entity->fnc_salario = $requestData["fnc_salario"];
           $Entity->fnc_usuario = $requestData["fnc_usuario"];
 
-          $resp = $Model->cadastrarFuncionario($Entity);
-          if ($resp === true)
+          $consultarUsuario = $Model->consultarFuncionarioUsuario($Entity);
+
+          if ($consultarUsuario === false)
           {
-            $jsondata['success'] = true;
-            $jsondata['message'] = "Operação realizada com sucesso.";
+            $resp = $Model->cadastrarFuncionario($Entity);
+            if ($resp === true)
+            {
+              $jsondata['success'] = true;
+              $jsondata['message'] = "Operação realizada com sucesso.";
+            }
+            else
+            {
+              $jsondata['success'] = false;
+              $jsondata['message'] = $resp;
+            }
           }
           else
           {
             $jsondata['success'] = false;
-            $jsondata['message'] = $resp;
+            $jsondata['message'] = "O usuário selecionado já está atribuído a um funcionário.";
           }
         }
 
@@ -212,17 +222,17 @@
         else if (!is_numeric($requestData["fnc_rg"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O RG não pode estar em branco.";
+          $jsondata["message"] = "O RG inserido é inválido.";
         }
         else if (!is_numeric($requestData["fnc_cpf"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O CPF não pode estar em branco.";
+          $jsondata["message"] = "O CPF inserido é inválido.";
         }
         else if (!is_numeric($requestData["fnc_telefone"]))
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O telefone não pode estar em branco.";
+          $jsondata["message"] = "O telefone inserido é inválido.";
         }
         else if (empty($requestData["fnc_email"]))
         {
@@ -252,7 +262,7 @@
         else if (is_numeric($requestData["fnc_salario"]) == false)
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "O salario não pode estar em branco.";
+          $jsondata["message"] = "O salario inserido é inválido.";
         }
         else if (empty($requestData["fnc_usuario"]))
         {
@@ -274,16 +284,26 @@
           $Entity->fnc_salario = str_replace(",", ".", $requestData["fnc_salario"]);
           $Entity->fnc_usuario = $requestData["fnc_usuario"];
 
-          $resp = $Model->alterarFuncionario($Entity);
-          if ($resp === true)
+          $consultarUsuario = $Model->consultarFuncionarioUsuario($Entity);
+
+          if ($consultarUsuario === false || $consultarUsuario->fnc_id == $Entity->fnc_id)
           {
-            $jsondata['success'] = true;
-            $jsondata['message'] = "Operação realizada com sucesso.";
+            $resp = $Model->alterarFuncionario($Entity);
+            if ($resp === true)
+            {
+              $jsondata['success'] = true;
+              $jsondata['message'] = "Operação realizada com sucesso.";
+            }
+            else
+            {
+              $jsondata['success'] = false;
+              $jsondata['message'] = $resp;
+            }
           }
           else
           {
             $jsondata['success'] = false;
-            $jsondata['message'] = $resp;
+            $jsondata['message'] = "O usuário selecionado já está atribuído a um funcionário.";
           }
         }
         echo json_encode($jsondata);
@@ -329,9 +349,16 @@
 
         if ($totalData > 0)
         {
-          array_walk_recursive($lSCadastro, function(&$value)
+          array_walk_recursive($lSCadastro, function(&$value, $key)
           {
-            $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], $value));
+            if ($key == "fnc_salario")
+            {
+              $value = "R$ ".number_format($value, 2, ",", ".");
+            }
+            else
+            {
+              $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], $value));
+            }
           });
         }
 

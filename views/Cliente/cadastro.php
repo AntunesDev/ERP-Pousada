@@ -45,16 +45,19 @@
                     <label class="col-md-2 control-label" for="cli_rg">RG</label>
                     <div class="col-md-3">
                         <input type="text" name="cli_rg" id="cli_rg" class="form-control" required autocomplete="nope">
+                        <span class="help-block">Apenas números</span>
                     </div>
                     <label class="col-md-2 control-label" for="cli_cpf">CPF</label>
                     <div class="col-md-3">
                         <input type="text" name="cli_cpf" id="cli_cpf" class="form-control" required autocomplete="nope">
+                        <span class="help-block">Apenas números</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="cli_telefone">Telefone</label>
                     <div class="col-md-3">
                         <input type="tel" name="cli_telefone" id="cli_telefone" class="form-control" required autocomplete="nope">
+                        <span class="help-block">Apenas números</span>
                     </div>
                 </div>
             </div>

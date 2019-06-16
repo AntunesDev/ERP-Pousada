@@ -45,20 +45,24 @@
                     <label class="col-md-2 control-label" for="fnc_rg">RG</label>
                     <div class="col-md-3">
                         <input type="text" name="fnc_rg" id="fnc_rg" class="form-control" required autocomplete="nope">
+                        <span class="help-block">Apenas números</span>
                     </div>
                     <label class="col-md-2 control-label" for="fnc_cpf">CPF</label>
                     <div class="col-md-3">
                         <input type="text" name="fnc_cpf" id="fnc_cpf" class="form-control" required autocomplete="nope">
+                        <span class="help-block">Apenas números</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="fnc_telefone">Telefone</label>
                     <div class="col-md-3">
                         <input type="tel" name="fnc_telefone" id="fnc_telefone" class="form-control" required autocomplete="nope">
+                        <span class="help-block">Apenas números</span>
                     </div>
                     <label class="col-md-2 control-label" for="fnc_cep">CEP</label>
                     <div class="col-md-3">
                         <input type="tel" name="fnc_cep" id="fnc_cep" class="form-control" required autocomplete="nope">
+                        <span class="help-block">Apenas números</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -79,6 +83,7 @@
                     <label class="col-md-2 control-label" for="fnc_salario">Salário</label>
                     <div class="col-md-3">
                         <input type="tel" name="fnc_salario" id="fnc_salario" class="form-control" required autocomplete="nope">
+                        <span class="help-block">Apenas números e ponto/vírgula</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -105,8 +110,8 @@
                         <th class="text-center">CPF</th>
                         <th class="text-center">Telefone</th>
                         <th class="text-center">E-mail</th>
-                        <th class="text-center">CEP</th>
                         <th class="text-center">Endereço</th>
+                        <th class="text-center">CEP</th>
                         <th class="text-center">Cidade</th>
                         <th class="text-center">Função</th>
                         <th class="text-center">Salário</th>

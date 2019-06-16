@@ -78,7 +78,7 @@ class SuitesController extends Core\Controller
       else if (is_numeric($requestData["ste_valor"]) == false)
       {
         $jsondata["success"] = false;
-        $jsondata["message"] = "Um valor deve ser preenchido.";
+        $jsondata["message"] = "Um valor válido deve ser preenchido.";
       }
       else
       {
@@ -167,7 +167,7 @@ class SuitesController extends Core\Controller
       else if (is_numeric($requestData["ste_valor"]) == false)
       {
         $jsondata["success"] = false;
-        $jsondata["message"] = "Um valor deve ser preenchido.";
+        $jsondata["message"] = "Um valor válido deve ser preenchido.";
       }
       else
       {
@@ -221,9 +221,16 @@ class SuitesController extends Core\Controller
 
       if ($totalData > 0)
       {
-        array_walk_recursive($lSCadastro, function(&$value)
+        array_walk_recursive($lSCadastro, function(&$value, $key)
         {
-          $value = $this->Helper->removeAccents(str_replace('"', '', $value));
+          if ($key == "ste_valor")
+          {
+            $value = "R$ ".number_format($value, 2, ",", ".");
+          }
+          else
+          {
+            $value = $this->Helper->removeAccents(str_replace('"', '', $value));
+          }
         });
       }
 

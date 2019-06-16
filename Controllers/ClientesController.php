@@ -73,17 +73,17 @@ class ClientesController extends Core\Controller
       else if (!is_numeric($requestData["cli_rg"]))
       {
         $jsondata["success"] = false;
-        $jsondata["message"] = "O RG não pode estar em branco.";
+        $jsondata["message"] = "Nenhum RG válido foi inserido.";
       }
       else if (!is_numeric($requestData["cli_cpf"]))
       {
         $jsondata["success"] = false;
-        $jsondata["message"] = "O CPF não pode estar em branco.";
+        $jsondata["message"] = "Nenhum CPF válido foi inserido.";
       }
       else if (!is_numeric($requestData["cli_telefone"]))
       {
         $jsondata["success"] = false;
-        $jsondata["message"] = "O telefone não pode estar em branco.";
+        $jsondata["message"] = "Nenhum telefone válido foi inserido.";
       }
       else if (empty($requestData["cli_email"]))
       {
@@ -176,17 +176,17 @@ class ClientesController extends Core\Controller
       else if (!is_numeric($requestData["cli_rg"]))
       {
         $jsondata["success"] = false;
-        $jsondata["message"] = "O RG não pode estar em branco.";
+        $jsondata["message"] = "Nenhum RG válido foi inserido.";
       }
       else if (!is_numeric($requestData["cli_cpf"]))
       {
         $jsondata["success"] = false;
-        $jsondata["message"] = "O CPF não pode estar em branco.";
+        $jsondata["message"] = "Nenhum CPF válido foi inserido.";
       }
       else if (!is_numeric($requestData["cli_telefone"]))
       {
         $jsondata["success"] = false;
-        $jsondata["message"] = "O telefone não pode estar em branco.";
+        $jsondata["message"] = "Nenhum telefone válido foi inserido.";
       }
       else if (empty($requestData["cli_email"]))
       {

@@ -78,7 +78,7 @@
         else if (is_numeric($requestData["prd_valor"]) == false)
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "Um valor deve ser preenchido.";
+          $jsondata["message"] = "Um valor válido deve ser preenchido.";
         }
         else
         {
@@ -167,7 +167,7 @@
         else if (is_numeric($requestData["prd_valor"]) == false)
         {
           $jsondata["success"] = false;
-          $jsondata["message"] = "Um valor deve ser preenchido.";
+          $jsondata["message"] = "Um valor válido deve ser preenchido.";
         }
         else
         {
@@ -221,9 +221,16 @@
 
         if ($totalData > 0)
         {
-          array_walk_recursive($lSCadastro, function(&$value)
+          array_walk_recursive($lSCadastro, function(&$value, $key)
           {
-            $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], $value));
+            if ($key == "prd_valor")
+            {
+              $value = "R$ ".number_format($value, 2, ",", ".");
+            }
+            else
+            {
+              $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], $value));
+            }
           });
         }
 

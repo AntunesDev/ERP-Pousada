@@ -39,6 +39,7 @@
                     <label class="col-md-2 control-label" for="prd_valor">Valor</label>
                     <div class="col-md-3">
                         <input type="text" name="prd_valor" id="prd_valor" class="form-control" required autocomplete="nope">
+                        <span class="help-block">Apenas números e ponto/vírgula</span>
                     </div>
                 </div>
             </div>

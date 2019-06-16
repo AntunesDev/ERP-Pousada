@@ -99,6 +99,21 @@ class Funcionario extends Core\Model
 		}
 	}
 
+	public function consultarFuncionarioUsuario($FuncionarioE)
+	{
+		try
+		{
+			$sql = $this->db->prepare("SELECT * FROM funcionarios WHERE fnc_usuario = :fnc_usuario;");
+			$sql->bindParam(":fnc_usuario", $FuncionarioE->fnc_usuario);
+			$sql->execute();
+			return $sql->fetch(PDO::FETCH_OBJ);
+		}
+		catch(Exception $exception)
+		{
+			throw new Exception($exception, 500);
+		}
+	}
+
 	public function alterarFuncionario($FuncionarioE)
 	{
 		$this->db->beginTransaction();

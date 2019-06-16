@@ -39,6 +39,7 @@
                     <label class="col-md-2 control-label" for="ste_valor">Valor</label>
                     <div class="col-md-3">
                         <input type="text" name="ste_valor" id="ste_valor" class="form-control" required autocomplete="nope">
+                        <span class="help-block">Apenas números e pontos/vírgulas</span>
                     </div>
                 </div>
             </div>
