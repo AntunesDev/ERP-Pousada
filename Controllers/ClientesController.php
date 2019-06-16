@@ -51,6 +51,47 @@ class ClientesController extends Core\Controller
     }
   }
 
+  public function consultarClienteCPF()
+  {
+    try
+    {
+      $requestData = $_REQUEST;
+      
+      $Cliente = new Models\Cliente();
+      $ClienteE = new Models\ClienteE();
+
+      if (!is_numeric($requestData["cli_cpf"]))
+      {
+        $json_data = ["success" => false, "message" => "O CPF inserido não é válido!"];
+      }
+      else
+      {
+        $ClienteE->cli_cpf = $requestData["cli_cpf"];
+        
+        $result = $Cliente->consultarClienteCPF($ClienteE);
+        if ($result === false)
+        {
+          $json_data = ["success" => false, "redirect" => true];
+        }
+        else
+        {
+          array_walk_recursive($result, function(&$value)
+          {
+            $value = $this->Helper->removeAccents(str_replace('"', '', $value));
+          });
+          
+          $json_data = ["success" => true, "result" => $result];
+        }
+      }
+      
+      echo json_encode($json_data);
+    }
+    catch (Exception $exception)
+    {
+      throw new Exception($exception, 500);
+    }
+  }
+
   public function incluirCliente()
   {
     try

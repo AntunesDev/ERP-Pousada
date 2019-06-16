@@ -409,5 +409,52 @@ $(document).ready(() =>
     }
   })
 
+  $('#btnSearch').on('click', () =>
+  {
+    swal({
+      title: "Buscar cliente",
+      text: "Preencha o CPF do cliente para buscar.",
+      icon: "warning",
+      buttons: ["Cancelar", "Buscar"],
+      content: "input"
+    })
+    .then((response) =>
+    {
+      if (response != null && response.length > 0)
+      {
+        let formData = new FormData()
+        formData.append("cli_cpf", response)
+        axios.post("Clientes/consultarClienteCPF", formData)
+        .then((res) =>
+        {
+          if (res.data.success)
+          {
+            $('#rsv_cliente').val(res.data.result.cli_id)
+          }
+          else if (res.data.redirect)
+          {
+            swal({
+              title: "Redirecionar?",
+              text: "Nenhum cliente encontrado com o CPF informado. Redirecionar para a criação de clientes?",
+              icon: "info",
+              buttons: ["Não", "Sim"]
+            })
+            .then((redirect) =>
+            {
+              if (redirect)
+              {
+                window.location.replace(`Clientes`)
+              }
+            })
+          }
+          else
+          {
+            swal("Oops...", res.data.message, "error")
+          }
+        })
+      }
+    })
+  })
+
 })
   

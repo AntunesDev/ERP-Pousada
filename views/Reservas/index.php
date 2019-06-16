@@ -52,6 +52,9 @@
                             <option value="">Selecione um cliente...</option>
                         </select>
                     </div>
+                    <div class="col-md-1">
+                        <button id="btnSearch" type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    </div>
                     <label class="col-md-2 control-label" for="rsv_suite">Suite</label>
                     <div class="col-md-3">
                         <select name="rsv_suite" id="rsv_suite" class="form-control" required readonly autocomplete="nope">

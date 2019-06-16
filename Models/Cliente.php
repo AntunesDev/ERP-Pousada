@@ -81,6 +81,21 @@ class Cliente extends Core\Model
 		}
 	}
 
+	public function consultarClienteCPF($ClienteE)
+	{
+		try
+		{
+			$sql = $this->db->prepare("SELECT * FROM clientes WHERE cli_cpf = :cli_cpf;");
+			$sql->bindParam(":cli_cpf", $ClienteE->cli_cpf);
+			$sql->execute();
+			return $sql->fetch(PDO::FETCH_OBJ);
+		}
+		catch(Exception $exception)
+		{
+			throw new Exception($exception, 500);
+		}
+	}
+
 	public function alterarCliente($ClienteE)
 	{
 		$this->db->beginTransaction();
