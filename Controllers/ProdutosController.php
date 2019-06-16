@@ -125,7 +125,7 @@
         else
         {
           $jsondata['success'] = false;
-          $jsondata['message'] = "Ocorreu um erro ao excluir o usuário selecionado.";
+          $jsondata['message'] = "Ocorreu um erro ao excluir o produto selecionado.";
         }
         echo json_encode($jsondata);
       }
@@ -271,6 +271,35 @@
       {
         $requestData = $_REQUEST;
         $Model = new Models\Produto();
+      }
+      catch (Exception $exception)
+      {
+        throw new Exception($exception, 500);
+      }
+    }
+
+    public function listarProdutos()
+    {
+      try
+      {
+        $Model = new Models\Produto();
+  
+        $totalData = $Model->consultarProdutos();
+        
+        if ($totalData > 0)
+        {
+          array_walk_recursive($totalData, function(&$value)
+          {
+            $value = $this->Helper->removeAccents(str_replace('"', '', $value));
+          });
+          $jsondata['result'] = $totalData;
+        }
+        else
+        {
+          $jsondata['result'] = [];
+        }
+  
+        echo json_encode($jsondata);
       }
       catch (Exception $exception)
       {

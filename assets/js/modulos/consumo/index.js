@@ -1,21 +1,47 @@
-$(document).ready(() => 
+if (rsv_id == 'null')
+{
+  swal("Oops...", "Não é possível acrescentar produtos sem ter uma reserva selecionada.", "error")
+  .then(() =>
+  {
+    window.location.href = 'Reservas'
+  })
+}
+else
+{
+  $('#cns_reserva').val(rsv_id)
+}
+
+axios.post('/ERP-Pousada/Produtos/listarProdutos')
+.then((res) => 
+{
+  $('#cns_produto').append($('<option>', {value:0, text: "Selecione um produto", preco: ''}))
+  res.data.result.forEach(element =>
+  {
+    $('#cns_produto').append($('<option>', {value:element.prd_id, text:element.prd_descricao, preco: element.prd_valor}))
+  })
+})
+
+$(document).ready(() =>   
 {
   let columns =
   {
     "columns":
     [
-      {"data": "prd_id"},
+      {"data": "cns_produto"},
       {"data": "prd_descricao"},
-      {"data": "prd_valor"}
+      {"data": "cns_valor"},
+      {"data": "cns_qtde"},
+      {"data": "cns_valor_total"},
+      {"data": "cns_momento"}
     ],
     "aoColumnDefs":
     [
-      { 'bSortable': false, 'aTargets': null },
+      { 'bSortable': false, 'aTargets': 4 },
     ]
   }
 
-  produtoDataTable = new DataTableClass('#produto-datatable', 'Produtos/consultarProdutos')
-  produtoDataTable.loadTable(columns)
+  consumoDataTable = new DataTableClass('#consumo-datatable', 'Consumo/consultarConsumos', {'cns_reserva': $('#cns_reserva').val()})
+  consumoDataTable.loadTable(columns)
 
   $(`#delete-btn`).prop("disabled", true)
 
@@ -29,17 +55,23 @@ $(document).ready(() =>
   {
     $(`#cadastro-form`).trigger("reset")
     $(`#delete-btn`).prop("disabled", true)
-    $('#prd_id').val(0)
+    $('#cns_produto').val(0)
+    $('#cns_valor').val(0)
+    $('#cns_qtde').val(0)
   })
 
-  $(`#prd_id`).on("change", () => 
+  $(`#cns_produto`).on("change", () => 
   {
-    if ($(`#prd_id`).val().length > 0)
+    if ($(`#cns_produto`).val().length > 0)
     {
       let data = new FormData()
-      data.append('prd_id', $(`#prd_id`).val())
-      axios.post(`Produtos/buscarProduto`, data)
+      data.append('cns_reserva', $('#cns_reserva').val())
+      data.append('cns_produto', $(`#cns_produto`).val())
+      axios.post(`/ERP-Pousada/Consumo/buscarConsumo`, data)
       .then((res) => {
+        let prd_valor = $('#cns_produto :selected').attr('preco')
+        $('#cns_valor').val(prd_valor)
+
         if (res.data.success == true)
         {
           Object.keys(res.data.result).map((key) => {
@@ -47,6 +79,12 @@ $(document).ready(() =>
             $(`#${key}`).val(value)
             $(`#cadastro-form`).change()
           })
+          $('#cns_valor_total').val(+$('#cns_valor').val() * + $('#cns_qtde').val())
+        }
+        else
+        {
+          $('#cns_qtde').val(0)
+          $('#cns_valor_total').val(0)
         }
       })
       $(`#delete-btn`).prop("disabled", false)
@@ -57,9 +95,9 @@ $(document).ready(() =>
     }
   })
 
-  $(`#produto-datatable`).on('click', 'tr', (event) => {
+  $(`#consumo-datatable`).on('click', 'tr', (event) => {
     let id = $(event.currentTarget).find('td:eq(0)').text()
-    $(`#prd_id`)
+    $(`#cns_produto`)
       .val(id)
       .trigger("change")
   })
@@ -79,19 +117,21 @@ $(document).ready(() =>
         .then((sure) => {
             if (sure) {
             let data = new FormData($(`#cadastro-form`)[0])
-            if (!data.has('prd_id') && $('#prd_id').val() != 0)
-                data.append('prd_id', $(`#prd_id`).val())
+            if (!data.has('cns_produto') && $('#cns_produto').val() != 0)
+              data.append('cns_produto', $(`#cns_produto`).val())
+            if (!data.has('cns_reserva') && $('#cns_reserva').val() != 0)
+              data.append('cns_reserva', $('#cns_reserva').val())
 
-            if ($('#prd_id').val() == 0)
+            if ($('#cns_produto').val() == 0)
             {
-                axios.post(`Produtos/incluirProduto`, data)
+                axios.post(`/ERP-Pousada/Consumo/incluirConsumo`, data)
                 .then((res) => {
                 if (res.data.success == true)
                 {
                     swal("Sucesso!", res.data.message, "success")
                     .then(() => {
-                    $(`#produto-datatable`).DataTable().ajax.reload()
-                    $(`#limpar-btn`).click()
+                      $(`#consumo-datatable`).DataTable().ajax.reload()
+                      $(`#limpar-btn`).click()
                     })
                 }
                 else
@@ -102,14 +142,14 @@ $(document).ready(() =>
             }
             else
             {
-                axios.post(`Produtos/alterarProduto`, data)
+                axios.post(`/ERP-Pousada/Consumo/alterarConsumo`, data)
                 .then((res) => {
                 if (res.data.success == true)
                 {
                     swal("Sucesso!", res.data.message, "success")
                     .then(() => {
-                    $(`#produto-datatable`).DataTable().ajax.reload()
-                    $(`#limpar-btn`).click()
+                      $(`#consumo-datatable`).DataTable().ajax.reload()
+                      $(`#limpar-btn`).click()
                     })
                 }
                 else
@@ -136,14 +176,15 @@ $(document).ready(() =>
     .then((sure) => {
       if (sure) {
         let data = new FormData()
-        data.append('prd_id', $(`#prd_id`).val())
-        axios.post(`Produtos/excluirProduto`, data)
+        data.append('cns_produto', $(`#cns_produto`).val())
+        data.append('cns_reserva', $('#cns_reserva').val())
+        axios.post(`/ERP-Pousada/Consumo/excluirConsumo`, data)
         .then((res) => {
           if (res.data.success == true)
           {
             swal("Sucesso!", res.data.message, "success")
             .then(() => {
-              $(`#produto-datatable`).DataTable().ajax.reload()
+              $(`#consumo-datatable`).DataTable().ajax.reload()
               $(`#limpar-btn`).click()
             })
           }
@@ -161,6 +202,16 @@ $(document).ready(() =>
   $('#print-btn').on('click', () =>
   {
     swal("Oops...", "Função ainda em testes.", "error")
+  })
+
+  $('#voltar-btn').on('click', () =>
+  {
+    window.location.href = '/ERP-Pousada/Reservas'
+  })
+
+  $('#cns_qtde').on('change', () =>
+  {
+    $('#cns_valor_total').val(+$('#cns_valor').val() * + $('#cns_qtde').val())
   })
 
 })

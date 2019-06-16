@@ -156,7 +156,7 @@ $(document).ready(() =>
           title: "Tem certeza?",
           text: "Salvar as informações especificadas?",
           icon: "warning",
-          buttons: true,
+          buttons: ["Não", "Sim"],
           dangerMode: true
         })
         .then((sure) => {
@@ -248,7 +248,7 @@ $(document).ready(() =>
         title: "Tem certeza?",
         text: message,
         icon: "warning",
-        buttons: true,
+        buttons: ["Não", "Sim"],
         dangerMode: true
       })
       .then((sure) => {
@@ -348,7 +348,7 @@ $(document).ready(() =>
       title: "Tem certeza?",
       text: "Cancelar a reserva selecionada?",
       icon: "warning",
-      buttons: true,
+      buttons: ["Não", "Sim"],
       dangerMode: true
     })
     .then((sure) => {
@@ -374,6 +374,39 @@ $(document).ready(() =>
         swal.close()
       }
     })
+  })
+
+  $('#consumo-btn').on('click', () =>
+  {
+    let rsv_id = $('#rsv_id').val()
+    let rsv_status = $('#rsv_status').val()
+
+    if (rsv_id.length == 0 || rsv_id == 0)
+    {
+      swal("Oops...", "É preciso ter uma reserva selecionada para editar o consumo.", "error")
+    }
+    else if (rsv_status != 3 && rsv_status != 4)
+    {
+      swal("Oops...", "Não é possível alterar o consumo de uma reserva no estado atual.", "error")
+    }
+    else
+    {
+      swal({
+        title: "Tem certeza?",
+        text: "Redirecionar para tela de gerenciamento de consumo?",
+        icon: "warning",
+        buttons: ["Não", "Sim"],
+        dangerMode: true
+      })
+      .then((sure) => {
+        if (sure) 
+        {
+          let formData = new FormData()
+          formData.append("rsv_id", rsv_id)
+          window.location.replace(`Consumo/index/?rsv_id=${rsv_id}`)
+        }
+      })
+    }
   })
 
 })

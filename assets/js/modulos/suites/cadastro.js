@@ -74,7 +74,7 @@ $(document).ready(() =>
             title: "Tem certeza?",
             text: "Salvar as informações especificadas?",
             icon: "warning",
-            buttons: true,
+            buttons: ["Não", "Sim"],
             dangerMode: true
         })
         .then((sure) => {
@@ -131,7 +131,7 @@ $(document).ready(() =>
       title: "Tem certeza?",
       text: "Excluir o item selecionado?",
       icon: "warning",
-      buttons: true,
+      buttons: ["Não", "Sim"],
       dangerMode: true
     })
     .then((sure) => {

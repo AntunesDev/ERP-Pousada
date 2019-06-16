@@ -34,17 +34,22 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="cns_produto">Produto</label>
                     <div class="col-md-3">
-                        <input type="text" name="cns_produto" id="cns_produto" class="form-control" required autocomplete="nope">
+                        <select name="cns_produto" id="cns_produto" class="form-control" required autocomplete="nope">
+                        </select>
                     </div>
                     <label class="col-md-2 control-label" for="cns_valor">Valor</label>
                     <div class="col-md-3">
-                        <input type="email" name="cns_valor" id="cns_valor" class="form-control" readonly required autocomplete="nope">
+                        <input type="text" name="cns_valor" id="cns_valor" class="form-control" readonly required autocomplete="nope" value=0>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="cns_qtde">Qtde</label>
                     <div class="col-md-3">
-                        <input type="number" name="cns_qtde" id="cns_qtde" class="form-control" required autocomplete="nope">
+                        <input type="number" name="cns_qtde" id="cns_qtde" class="form-control" required autocomplete="nope" value=0>
+                    </div>
+                    <label class="col-md-2 control-label" for="cns_valor_total">Valor Total</label>
+                    <div class="col-md-3">
+                        <input type="text" name="cns_valor_total" id="cns_valor_total" class="form-control" readonly required autocomplete="nope" value=0>
                     </div>
                 </div>
             </div>
@@ -54,12 +59,14 @@
 <div class="block">
     <div class="block-section">
         <div class="table-responsive">
-            <table id="cliente-datatable" class="table table-striped table-bordered table-vcenter" style="width: 100%;">
+            <table id="consumo-datatable" class="table table-striped table-bordered table-vcenter" style="width: 100%;">
                 <thead>
                     <tr>
                         <th class="text-center">Produto</th>
-                        <th class="text-center">Qtde</th>
+                        <th class="text-center">Descrição</th>
                         <th class="text-center">Valor</th>
+                        <th class="text-center">Qtde</th>
+                        <th class="text-center">Valor Total</th>
                         <th class="text-center">Momento</th>
                     </tr>
                 </thead>
@@ -70,7 +77,10 @@
 <!-- obligatory scripts to load -->
 <?php include BASE_PATH . 'assets/inc/page_footer.php'; ?>
 <?php include BASE_PATH . 'assets/inc/template_scripts.php'; ?>
-<script type="text/javascript"> var BASE_URL = '<?php echo BASE_URL; ?>';</script>
+<script type="text/javascript">
+    var BASE_URL = '<?php echo BASE_URL; ?>';
+    var rsv_id = '<?php echo $rsv_id ?? 'null';?>'
+</script>
 <!-- on demand scripts to load -->
 <script src="<?php echo BASE_URL?>assets/js/modulos/gral/checkSession.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/pages/sweetalert.min.js"></script>
@@ -78,3 +88,4 @@
 <script src="<?php echo BASE_URL?>assets/js/pages/jquery.number.min.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/lang/pt/message.js"></script>
 <script src="<?php echo BASE_URL?>assets/js/modulos/gral/Datatable.js"></script>
+<script src="<?php echo BASE_URL?>assets/js/modulos/consumo/index.js"></script>
