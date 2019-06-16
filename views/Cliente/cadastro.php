@@ -76,6 +76,7 @@
                         <th class="text-center">CPF</th>
                         <th class="text-center">Telefone</th>
                         <th class="text-center">E-mail</th>
+                        <th class="text-center">Já fez reservas?</th>
                     </tr>
                 </thead>
             </table>

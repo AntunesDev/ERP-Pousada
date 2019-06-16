@@ -96,6 +96,21 @@ class Cliente extends Core\Model
 		}
 	}
 
+	public function consultarReservasCliente($ClienteE)
+	{
+		try
+		{
+			$sql = $this->db->prepare("SELECT COUNT(*) AS count FROM reservas WHERE rsv_cliente = :cli_id;");
+			$sql->bindParam(":cli_id", $ClienteE->cli_id);
+			$sql->execute();
+			return $sql->fetch(PDO::FETCH_OBJ)->count;
+		}
+		catch(Exception $exception)
+		{
+			throw new Exception($exception, 500);
+		}
+	}
+
 	public function alterarCliente($ClienteE)
 	{
 		$this->db->beginTransaction();
@@ -186,7 +201,8 @@ class Cliente extends Core\Model
 			cli_rg,
 			cli_cpf,
 			cli_telefone,
-			cli_email
+			cli_email,
+			(SELECT COUNT(*) AS count FROM reservas WHERE rsv_cliente = cli_id) AS reservas
 		FROM clientes
 		WHERE
 			cli_nome LIKE :searchText

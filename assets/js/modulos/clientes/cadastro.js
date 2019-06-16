@@ -9,11 +9,23 @@ $(document).ready(() =>
       {"data": "cli_rg"},
       {"data": "cli_cpf"},
       {"data": "cli_telefone"},
-      {"data": "cli_email"}
+      {"data": "cli_email"},
+      {
+        data: null, render: (data, type, row) => {
+          if (data.reservas == 0)
+          {
+            return `<center><i class="fa fa-ban text-danger"></i></center>`
+          }
+          else
+          {
+            return `<center><i class="fa fa-check" style="color: green;"></i></center>`
+          }
+        }
+      }
     ],
     "aoColumnDefs":
     [
-      { 'bSortable': false, 'aTargets': null },
+      { 'bSortable': false, 'aTargets': [6] },
     ]
   }
 

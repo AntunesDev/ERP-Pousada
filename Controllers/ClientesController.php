@@ -171,17 +171,28 @@ class ClientesController extends Core\Controller
 
       $Entity->cli_id = $requestData["cli_id"];
 
-      $resp = $Model->excluirCliente($Entity);
-      if ($resp === true)
+      $countReservas = $Model->consultarReservasCliente($Entity);
+
+      if ($countReservas > 0)
       {
-        $jsondata['success'] = true;
-        $jsondata['message'] = "Operação realizada com sucesso.";
+        $jsondata['success'] = false;
+        $jsondata['message'] = "Não é possível excluir um cliente que já tenha realizado reservas anteriormente.";
       }
       else
       {
-        $jsondata['success'] = false;
-        $jsondata['message'] = "Ocorreu um erro ao excluir o cliente selecionado.";
+        $resp = $Model->excluirCliente($Entity);
+        if ($resp === true)
+        {
+          $jsondata['success'] = true;
+          $jsondata['message'] = "Operação realizada com sucesso.";
+        }
+        else
+        {
+          $jsondata['success'] = false;
+          $jsondata['message'] = "Ocorreu um erro ao excluir o cliente selecionado.";
+        }
       }
+
       echo json_encode($jsondata);
     }
     catch (Exception $exception)
@@ -277,7 +288,8 @@ class ClientesController extends Core\Controller
         2 => 'cli_rg',
         3 => 'cli_cpf',
         4 => 'cli_telefone',
-        5 => 'cli_email'
+        5 => 'cli_email',
+        6 => 'reservas'
       );
 
       $draw = $requestData['draw'];
