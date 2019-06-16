@@ -7,8 +7,8 @@
         </div>
         <div class="col-sm-9">
             <div class="header-section text-center">
-                <button id="delete-btn" class="btn btn-danger pull-right"style="margin: 2px;">
-                    <span class="fa fa-times"></span> <span class="hidden-xs">Excluir</span>
+                <button id="cancelar-btn" class="btn btn-danger pull-right"style="margin: 2px;">
+                    <span class="fa fa-times"></span> <span class="hidden-xs">Cancelar</span>
                 </button>
                 <button id="limpar-btn" class="btn btn-warning pull-right"style="margin: 2px;">
                     <span class="fa fa-arrow-up"></span> <span class="hidden-xs">Limpar</span>
@@ -22,9 +22,6 @@
                 <button id="consumo-btn" class="btn btn-warning pull-right" style="margin: 2px;">
                     <span class="fa fa-pencil"></span> <span class="hidden-xs">Consumo</span>
                 </button>
-                <button id="fechar-btn" class="btn btn-info pull-right" style="margin: 2px;">
-                    <span class="fa fa-money"></span> <span class="hidden-xs">Fechar Conta</span>
-                </button>
             </div>
         </div>
     </div>
@@ -36,6 +33,7 @@
     <div class="block-section">
         <form id='cadastro-form' class="form-horizontal" onsubmit="return false;">
             <input type="hidden" name="rsv_id" id="rsv_id" value=0>
+            <input type="hidden" name="rsv_status" id="rsv_status" value=0>
             <div class="block">
                 <div class="form-group">
                     <label class="col-md-2 col-md-offset-2 control-label" for="rsv_datas">Período</label>

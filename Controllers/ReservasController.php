@@ -33,8 +33,10 @@ class ReservasController extends Core\Controller
       $rsv_data_saida = $requestData["rsv_data_saida"];
       $rsv_data_saida = \DateTime::createFromFormat("d/m/Y", $rsv_data_saida);
       $rsv_data_saida = $rsv_data_saida->format("Ymd");
+
+      $rsv_id = empty($requestData["rsv_id"]) ? null : $requestData["rsv_id"];
       
-      $result = $Reserva->getSuitesDisponiveis($rsv_data_entrada, $rsv_data_saida);
+      $result = $Reserva->getSuitesDisponiveis($rsv_data_entrada, $rsv_data_saida, $rsv_id);
       if (count($result) === 0)
       {
         $json_data = ["success" => false];
@@ -127,7 +129,13 @@ class ReservasController extends Core\Controller
       else
       {
         $Entity->rsv_data_entrada = $requestData["rsv_data_entrada"];
+        $Entity->rsv_data_entrada = \DateTime::createFromFormat("d/m/Y", $Entity->rsv_data_entrada);
+        $Entity->rsv_data_entrada = $Entity->rsv_data_entrada->format("Ymd");
+        
         $Entity->rsv_data_saida = $requestData["rsv_data_saida"];
+        $Entity->rsv_data_saida = \DateTime::createFromFormat("d/m/Y", $Entity->rsv_data_saida);
+        $Entity->rsv_data_saida = $Entity->rsv_data_saida->format("Ymd");
+
         $Entity->rsv_status = 1;
         $Entity->rsv_cliente = $requestData["rsv_cliente"];
         $Entity->rsv_funcionario = $_SESSION[$this->Config::SESSION_NAME]["user"]["data"]["id"];
@@ -153,7 +161,7 @@ class ReservasController extends Core\Controller
     }
   }
 
-  public function excluirReserva()
+  public function cancelarReserva()
   {
     try
     {
@@ -164,17 +172,38 @@ class ReservasController extends Core\Controller
 
       $Entity->rsv_id = $requestData["rsv_id"];
 
-      $resp = $Model->excluirReserva($Entity);
-      if ($resp === true)
+      $reserva = $Model->buscarReserva($Entity);
+
+      if ($reserva == false)
       {
-        $jsondata['success'] = true;
-        $jsondata['message'] = "Operação realizada com sucesso.";
+        $jsondata['success'] = false;
+        $jsondata['message'] = "Ocorreu um erro ao buscar informações da reserva.";
+      }
+      else if ($reserva->rsv_status == 3)
+      {
+        $jsondata['success'] = false;
+        $jsondata['message'] = "Não é possível cancelar uma reserva em andamento. Em vez disso, faça o checkout.";
+      }
+      else if ($reserva->rsv_status == 4)
+      {
+        $jsondata['success'] = false;
+        $jsondata['message'] = "Não é possível cancelar uma reserva já aguardando checkout.";
       }
       else
       {
-        $jsondata['success'] = false;
-        $jsondata['message'] = "Ocorreu um erro ao excluir a reserva selecionada.";
+        $resp = $Model->cancelarReserva($Entity);
+        if ($resp === true)
+        {
+          $jsondata['success'] = true;
+          $jsondata['message'] = "Operação realizada com sucesso.";
+        }
+        else
+        {
+          $jsondata['success'] = false;
+          $jsondata['message'] = "Ocorreu um erro ao cancelar a reserva selecionada.";
+        }
       }
+
       echo json_encode($jsondata);
     }
     catch (Exception $exception)
@@ -197,7 +226,17 @@ class ReservasController extends Core\Controller
         $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], $value));
       });
 
-      if (empty($requestData["rsv_cliente"]))
+      if (empty($requestData["rsv_data_entrada"]))
+      {
+        $jsondata["success"] = false;
+        $jsondata["message"] = "A data de entrada da reserva não pode estar em branco.";
+      }
+      else if (empty($requestData["rsv_data_saida"]))
+      {
+        $jsondata["success"] = false;
+        $jsondata["message"] = "A data de saída da reserva não pode estar em branco.";
+      }
+      else if (empty($requestData["rsv_cliente"]))
       {
         $jsondata["success"] = false;
         $jsondata["message"] = "Nenhum cliente foi selecionado para a reserva.";
@@ -209,10 +248,19 @@ class ReservasController extends Core\Controller
       }
       else
       {
+        $Entity->rsv_data_entrada = $requestData["rsv_data_entrada"];
+        $Entity->rsv_data_entrada = \DateTime::createFromFormat("d/m/Y", $Entity->rsv_data_entrada);
+        $Entity->rsv_data_entrada = $Entity->rsv_data_entrada->format("Ymd");
+        
+        $Entity->rsv_data_saida = $requestData["rsv_data_saida"];
+        $Entity->rsv_data_saida = \DateTime::createFromFormat("d/m/Y", $Entity->rsv_data_saida);
+        $Entity->rsv_data_saida = $Entity->rsv_data_saida->format("Ymd");
+
+        
         $Entity->rsv_id = $requestData["rsv_id"];
         $Entity->rsv_cliente = $requestData["rsv_cliente"];
         $Entity->rsv_suite = $requestData["rsv_suite"];
-
+        
         $resp = $Model->alterarReserva($Entity);
         if ($resp === true)
         {
@@ -233,6 +281,78 @@ class ReservasController extends Core\Controller
     }
   }
 
+  public function alterarEstadoReserva()
+  {
+    try
+    {
+      $requestData = $_REQUEST;
+
+      $Model = new Models\Reserva();
+      $Entity = new Models\ReservaE();
+
+      $Entity->rsv_id = $requestData["rsv_id"];
+      $Entity->rsv_status = $requestData["rsv_status_to"];
+
+      if ($requestData["rsv_status_from"] == 3)
+      {
+        $Model->adiantarCheckoutReserva($Entity);
+      }
+
+      $resp = $Model->alterarEstadoReserva($Entity);
+      if ($resp === true)
+      {
+        $jsondata['success'] = true;
+        $jsondata['message'] = "Operação realizada com sucesso.";
+
+        if ($requestData["rsv_status_to"] == 5)
+        {
+          $Consumo = new Models\Consumo();
+          $consumoTotalReserva = $Consumo->getConsumoTotalReserva($Entity);
+          $totalReserva = $Model->getTotalReserva($Entity);
+
+          $consumoTotalReserva[] = [
+            "cns_produto" => $totalReserva->rsv_suite,
+            "cns_qtde" => $totalReserva->rsv_dias,
+            "cns_valor" => $totalReserva->rsv_valor_dia,
+            "cns_valor_total" => $totalReserva->rsv_valor_total
+          ];
+
+          array_walk_recursive($requestData, function(&$value, $key)
+          {
+            if ($key == "cns_valor" || $key == "cns_valor_total")
+            {
+              $value = number_format($value, 2, ",", ".");
+            }
+            else
+            {
+              $value = $this->Helper->removeAccents(str_replace(['"', ","], ['','.'], $value));
+            }
+          });
+
+          $total = 0;
+          foreach ($consumoTotalReserva as $produto)
+          {
+            $total += $produto["cns_valor_total"];
+          }
+          $total = number_format($total, 2, ",", ".");
+
+          $jsondata['itens'] = $consumoTotalReserva;
+          $jsondata['valor_total'] = $total;
+        }
+      }
+      else
+      {
+        $jsondata['success'] = false;
+        $jsondata['message'] = $resp;
+      }
+      echo json_encode($jsondata);
+    }
+    catch (Exception $exception)
+    {
+      throw new Exception($exception, 500);
+    }
+  }
+
   public function consultarReservas()
   {
     try
@@ -240,6 +360,7 @@ class ReservasController extends Core\Controller
       $requestData = $_REQUEST;
 
       $Model = new Models\Reserva();
+      $Model->atualizaEstadoReservas();
 
       $columns = array(
         0 => 'rsv_id',

@@ -42,13 +42,6 @@ $(document).ready(() =>
   usuarioDataTable = new DataTableClass('#usuario-datatable', 'Usuarios/consultarUsuarios')
   usuarioDataTable.loadTable(columns)
 
-  $(document).on('keypress', (e) =>
-  {
-    if (e.keyCode == 13)
-    {
-      $('#add-btn').click()
-    }
-  })
 
   $(`#delete-btn`).prop("disabled", true)
 

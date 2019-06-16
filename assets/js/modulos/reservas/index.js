@@ -17,6 +17,10 @@ $(document).on('change', '#rsv_data_entrada, #rsv_data_saida', () =>
     let formData = new FormData()
     formData.append("rsv_data_entrada", rsv_data_entrada)
     formData.append("rsv_data_saida", rsv_data_saida)
+
+    if ($('#rsv_id').val() != 0)
+      formData.append('rsv_id', $('#rsv_id').val())
+
     axios.post("Reservas/getSuitesDisponiveis", formData)
     .then((res) =>
     {
@@ -52,19 +56,15 @@ $(document).ready(() =>
       {"data": "rsv_data_entrada"},
       {"data": "rsv_data_saida"},
       {"data": "ste_tipo"},
-      {"data": "sst_nome"},
-      /*{
-        data: null, render: (data, type, row) => {
-          if (data.usr_nome.length == 0)
-          {
-            return `<center><i class="fa fa-ban text-danger"></i></center>`
-          }
-          else
-          {
-            return `<center>${data.usr_nome}</center>`
-          }
+      {
+        data: null, render: (data, type, row) => 
+        {
+          let rsv_status = data.rsv_status
+          let sst_nome = data.sst_nome
+          sst_nome
+          return `<center><button class='btn btn-warning btnStatus' rsv_id='${data.rsv_id}' rsv_status='${rsv_status}'>${sst_nome}</button></center>`
         }
-      },*/
+      },
       {"data": "cli_nome"},
       {"data": "fnc_nome"},
       {"data": "rsv_valor_total"}
@@ -78,15 +78,7 @@ $(document).ready(() =>
   reservasDataTable = new DataTableClass('#reservas-datatable', 'Reservas/consultarReservas')
   reservasDataTable.loadTable(columns)
 
-  $(document).on('keypress', (e) =>
-  {
-    if (e.keyCode == 13)
-    {
-      $('#add-btn').click()
-    }
-  })
-
-  $(`#delete-btn`).prop("disabled", true)
+  $(`#cancelar-btn`).prop("disabled", true)
 
   $(`#cadastro-form`).on('reset', () => 
   {
@@ -97,8 +89,9 @@ $(document).ready(() =>
   $(`#limpar-btn`).on('click', () => 
   {
     $(`#cadastro-form`).trigger("reset")
-    $(`#delete-btn`).prop("disabled", true)
+    $(`#cancelar-btn`).prop("disabled", true)
     $('#rsv_id').val(0)
+    $('#rsv_status').val(0)
   })
 
   $(`#rsv_id`).on("change", () => 
@@ -116,21 +109,36 @@ $(document).ready(() =>
             $(`#${key}`).val(value)
             $(`#cadastro-form`).change()
           })
+
+          if (res.data.result.rsv_status != 1)
+          {
+            $('#rsv_data_entrada').attr('readonly', false)
+            $('#rsv_data_saida').attr('readonly', false)
+          }
+          else
+          {
+            $('#rsv_data_entrada').removeAttr('readonly')
+            $('#rsv_data_saida').removeAttr('readonly')
+          }
         }
       })
-      $(`#delete-btn`).prop("disabled", false)
+      $(`#cancelar-btn`).prop("disabled", false)
     }
     else
     {
-      $(`#delete-btn`).prop("disabled", true)
+      $(`#cancelar-btn`).prop("disabled", true)
     }
   })
 
-  $(`#reservas-datatable`).on('click', 'tr', (event) => {
-    let id = $(event.currentTarget).find('td:eq(0)').text()
-    $(`#rsv_id`)
+  $(`#reservas-datatable`).on('click', 'td', (event) => 
+  {
+    if (event.currentTarget != $(event.currentTarget).parent().find('td:eq(4)')[0])
+    {
+      let id = $(event.currentTarget).parent().find('td:eq(0)').text()
+      $(`#rsv_id`)
       .val(id)
       .trigger("change")
+    }
   })
 
   $(`#add-btn`).on('click', () => {
@@ -201,10 +209,144 @@ $(document).ready(() =>
     }
   })
 
-  $(`#delete-btn`).on('click', () => {
+  $(document).on('click', '.btnStatus', (e) => 
+  {
+    target = $(e.currentTarget)
+    rsv_id = target.attr('rsv_id')
+    rsv_status = target.attr('rsv_status')
+
+    switch (rsv_status)
+    {
+      case '1':
+        message = "Ainda não é o dia de entrada dessa reserva. É necessário alterar o perído antes."
+        error = true
+        break;
+      case '2':
+        message = "Efetuar check-in do cliente para esta reserva?"
+        rsv_status_to = 3
+        error = false
+        break;
+      case '3':
+        message = "Adiantar o checkout para esta reserva?"
+        rsv_status_to = 5
+        error = false
+        break;
+      case '4':
+        message = "Realizar o checkout para esta reserva?"
+        rsv_status_to = 5
+        error = false
+        break;
+    }
+
+    if (error)
+    {
+      swal("Oops...", message, "error")
+    }
+    else
+    {
+      swal({
+        title: "Tem certeza?",
+        text: message,
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      })
+      .then((sure) => {
+        if (sure)
+        {
+          let formData = new FormData()
+          formData.append("rsv_id", rsv_id)
+          formData.append("rsv_status_from", rsv_status)
+          formData.append("rsv_status_to", rsv_status_to)
+          axios.post("Reservas/alterarEstadoReserva", formData)
+          .then((res) =>
+          {
+            if (res.data.success)
+            {
+              if (typeof res.data.itens != "undefined")
+              {
+                let innerHTML = "<table width=100%>"
+                res.data.itens.forEach((item, index) =>
+                {
+                  innerHTML += `
+                  <tr>
+                    <td align=left>${item.cns_produto}</td>
+                    <td align=right>${item.cns_qtde}</td>
+                    <td align=right>x R$ ${item.cns_valor}</td>
+                  </tr>
+                  <tr>
+                    <td colspan=3 align=right>R$ ${item.cns_valor_total}</td>
+                  </tr>
+                  `
+
+                  if (index != (res.data.itens.length - 1))
+                  {
+                    innerHTML += `
+                    <tr>
+                      <td></td>
+                      <td colspan=2 align=right><hr></td>
+                    </tr>
+                    `
+                  }
+                })
+                innerHTML += "<tr><th colspan=3><hr></th></tr>"
+                innerHTML += `<tr><th>Total</th><th colspan=2 align=right>R$ ${res.data.valor_total}</th></tr>`
+                innerHTML += "</table>"
+
+                var span = document.createElement("span");
+                span.innerHTML = innerHTML
+
+                swal(
+                {
+                  title: 'Realize a cobrança ao cliente!',
+                  closeOnClickOutside: false,
+                  closeOnEsc: false,
+                  button: false,
+                  content: span
+                })
+
+                setTimeout(() =>
+                {
+                  swal(
+                  {
+                    title: 'Realize a cobrança ao cliente!',
+                    closeOnClickOutside: false,
+                    closeOnEsc: false,
+                    button: true,
+                    content: span
+                  })
+                  .then(() =>
+                  {
+                    $(`#reservas-datatable`).DataTable().ajax.reload()
+                    $(`#limpar-btn`).click()
+                  })
+                }, 6500)
+              }
+              else
+              {
+                swal("Sucesso!", res.data.message, "success")
+                .then(() =>
+                {
+                  $(`#reservas-datatable`).DataTable().ajax.reload()
+                  $(`#limpar-btn`).click()
+                })
+              }
+            }
+            else
+            {
+              swal("Oops...", res.data.message, "error")
+            }
+          })
+        }
+      })
+    }
+  })
+
+  $(`#cancelar-btn`).on('click', () => 
+  {
     swal({
       title: "Tem certeza?",
-      text: "Excluir o item selecionado?",
+      text: "Cancelar a reserva selecionada?",
       icon: "warning",
       buttons: true,
       dangerMode: true
@@ -213,7 +355,7 @@ $(document).ready(() =>
       if (sure) {
         let data = new FormData()
         data.append('rsv_id', $(`#rsv_id`).val())
-        axios.post(`Reservas/excluirReserva`, data)
+        axios.post(`Reservas/cancelarReserva`, data)
         .then((res) => {
           if (res.data.success == true)
           {

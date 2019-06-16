@@ -37,13 +37,6 @@ $(document).ready(() =>
   funcionarioDataTable = new DataTableClass('#funcionario-datatable', 'Funcionarios/consultarFuncionarios')
   funcionarioDataTable.loadTable(columns)
 
-  $(document).on('keypress', (e) =>
-  {
-    if (e.keyCode == 13)
-    {
-      $('#add-btn').click()
-    }
-  })
 
   $(`#delete-btn`).prop("disabled", true)
 

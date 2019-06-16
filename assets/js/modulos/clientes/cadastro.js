@@ -20,13 +20,6 @@ $(document).ready(() =>
   clienteDataTable = new DataTableClass('#cliente-datatable', 'Clientes/consultarClientes')
   clienteDataTable.loadTable(columns)
 
-  $(document).on('keypress', (e) =>
-  {
-    if (e.keyCode == 13)
-    {
-      $('#add-btn').click()
-    }
-  })
 
   $(`#delete-btn`).prop("disabled", true)
 
