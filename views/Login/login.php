@@ -2,7 +2,7 @@
 include BASE_PATH . 'assets/inc/config.php';
 include BASE_PATH . 'assets/inc/template_start.php';
 ?>
-<img src="<?php echo BASE_URL?>assets/img/background.jpg" class="full-bg animation-pulseSlow" style="filter: blur(1.5px); opacity:0.2;">
+<img src="<?php echo BASE_URL?>assets/img/background.jpg" class="full-bg animation-pulseSlow" style="filter: blur(1.5px); opacity:0.7;">
 <div id="login-container">
     <h1 class="h2 text-light text-center push-top-bottom animation-slideDown">
         <i class="fa fa-bed"></i> Modular<strong>Inn</strong>
@@ -45,7 +45,7 @@ include BASE_PATH . 'assets/inc/template_start.php';
             </div>
         </form>
     </div>
-    <footer class="text-muted text-center animation-pullUp">
+    <footer class="text-center animation-pullUp">
         <small><span id="year-copy"></span> &copy; <a href="#" target="_blank"><?php echo $template['name'] . ' ' . $template['version']; ?></a></small>
     </footer>
 </div>

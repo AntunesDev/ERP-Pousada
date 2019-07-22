@@ -16,7 +16,7 @@
                 <button id="add-btn" class="btn btn-info pull-right"style="margin: 2px;">
                     <span class="fa fa-plus"></span> <span class="hidden-xs">Incluir / Alterar</span>
                 </button>
-                <button id="print-btn" class="btn btn-success pull-right" style="margin: 2px;">
+                <button id="print-btn" class="display-none btn btn-success pull-right" style="margin: 2px;">
                     <span class="fa fa-print"></span> <span class="hidden-xs">Relatório</span>
                 </button>
             </div>

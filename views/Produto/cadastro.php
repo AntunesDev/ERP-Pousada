@@ -1,11 +1,11 @@
 <div class="content-header">
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <div class="header-section text-center">
-                <h1>Produtos</h1>
+                <h1>Produtos, Serviços e Adicionais</h1>
             </div>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-8">
             <div class="header-section text-center">
                 <button id="delete-btn" class="btn btn-danger pull-right"style="margin: 2px;">
                     <span class="fa fa-times"></span> <span class="hidden-xs">Excluir</span>
@@ -16,7 +16,7 @@
                 <button id="add-btn" class="btn btn-info pull-right"style="margin: 2px;">
                     <span class="fa fa-plus"></span> <span class="hidden-xs">Incluir / Alterar</span>
                 </button>
-                <button id="print-btn" class="btn btn-success pull-right" style="margin: 2px;">
+                <button id="print-btn" class="display-none btn btn-success pull-right" style="margin: 2px;">
                     <span class="fa fa-print"></span> <span class="hidden-xs">Relatório</span>
                 </button>
             </div>
